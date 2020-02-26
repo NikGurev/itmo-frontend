@@ -1,0 +1,51 @@
+.nav {
+	position: fixed;
+    top: 0px;
+	background-color: #FFC90E;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+
+    
+
+}
+.footer {
+	position: absolute;
+    bottom: 0px;
+	background-color: #ED1C24;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+	height: 190px;
+	width: 100%;
+}
+
+
+.block {
+	background-color: #B5E61D;
+	width: 200px;
+	height: 400px;
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+.block1 {
+	margin-left: 10px;
+	margin-right: 50px;
+}
+
+.block2 {
+	margin-left: 30px;
+
+	margin-right: 10px;
+}
+
+.content {
+	background-color: #FF7F27;
+}
+
+}
+

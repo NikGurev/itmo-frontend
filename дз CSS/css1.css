@@ -1,0 +1,29 @@
+.nav {
+	background-color: #FFC90E;
+}
+
+.block {
+	background-color: #B5E61D;
+	height: 150px;
+}
+
+.block1 {
+	float: left;
+}
+
+.block2 {
+	float: right;
+}
+
+.content {
+	background-color: #FF7F27;
+}
+
+.footer {
+	background-color: #ED1C24;
+	clear: both;
+}
+
+.box {
+	height: 190px;
+}
