@@ -2,20 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ad92ef79-4b5c-467c-82cd-0f703919103a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/2 task/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2 task/second.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homeworkGurev.js" beforeDir="false" afterPath="$PROJECT_DIR$/1 task/first.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/icons/icons8-введите-пин-код-еще-раз-64.png" beforeDir="false" afterPath="$PROJECT_DIR$/1 task/icons/icons8-введите-пин-код-еще-раз-64.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/icons/icons8-оценки-80.png" beforeDir="false" afterPath="$PROJECT_DIR$/1 task/icons/icons8-оценки-80.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/icons/icons8-показать-64.png" beforeDir="false" afterPath="$PROJECT_DIR$/1 task/icons/icons8-показать-64.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/icons/icons8-солдатский-жетон-64.png" beforeDir="false" afterPath="$PROJECT_DIR$/1 task/icons/icons8-солдатский-жетон-64.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/icons/имя.png" beforeDir="false" afterPath="$PROJECT_DIR$/1 task/icons/имя.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/icons/количество.png" beforeDir="false" afterPath="$PROJECT_DIR$/1 task/icons/количество.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/icons/принадлежность.png" beforeDir="false" afterPath="$PROJECT_DIR$/1 task/icons/принадлежность.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/icons/сбросить.png" beforeDir="false" afterPath="$PROJECT_DIR$/1 task/icons/сбросить.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/1 task/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ВебТехнологииГурьев.zip" beforeDir="false" afterPath="$PROJECT_DIR$/1 task/ВебТехнологииГурьев.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2 task/second.js" beforeDir="false" afterPath="$PROJECT_DIR$/2 task/second.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +51,7 @@
       <workItem from="1582405146511" duration="6090000" />
       <workItem from="1582442376059" duration="4009000" />
       <workItem from="1582706903275" duration="20000" />
-      <workItem from="1583479645947" duration="47000" />
+      <workItem from="1583479645947" duration="662000" />
     </task>
     <servers />
   </component>
