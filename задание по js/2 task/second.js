@@ -44,7 +44,7 @@ button.onclick = () => {
         document.getElementById('cols').value,
         document.getElementById('rows').value,
     );
-    form.remove();
+    form.style.display = 'none';
 };
 
 form.appendChild(button);
@@ -70,11 +70,33 @@ function createTableCell() {
     td.style.minWidth = '100px';
     td.style.height = '30px';
     td.style.border = '1px solid black';
-    td.onmousemove = () =>  td.style.backgroundColor = '#cecece';
-    td.onmouseout = () =>  td.style.backgroundColor = 'white';
+    td.onmousemove = () => td.style.backgroundColor = '#cecece';
+    td.onmouseout = () => td.style.backgroundColor = 'white';
+    td.appendChild(createTableCellContent(td));
     return td;
 }
 
+// 3
+function createTableCellContent(td) {
+    let form = document.createElement('form'),
+        textarea = document.createElement('textarea'),
+        button = document.createElement('button')
+    ;
+    button.innerText = 'Сохранить';
+    button.type = 'button';
+    button.style.display = 'block';
+    textarea.cols = 20;
+    textarea.rows = 1;
+    // После нажатия на «сохранить», эта форма пропадает, а вместо нее появляется введенный пользователем текст.
+    button.onclick = () => {
+        td.innerText = button.previousSibling.value;
+        form.remove();
+    };
+
+    form.appendChild(textarea);
+    form.appendChild(button);
+    return form;
+}
 
 
 
