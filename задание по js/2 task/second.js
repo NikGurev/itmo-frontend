@@ -99,19 +99,93 @@ function createTableCellContent(td) {
     return form;
 }
 
+// 4. Оформление блока с функцией
 function createFunctionPanel() {
     let divWrapper = document.createElement('div')
     ;
     divWrapper.className = 'function_container';
-    divWrapper.appendChild(createFunction('Изменить границы таблицы'));
+    divWrapper.appendChild(borderChanger());
     document.body.appendChild(divWrapper);
 }
 
 function createFunction(functionName) {
-    let div = document.createElement('div');
+    let div = document.createElement('div'),
+        p = document.createElement('p')
+    ;
+    p.innerText = functionName;
     div.className = 'function';
-    div.innerText = functionName;
+    div.appendChild(p);
     return div;
+}
+
+// 5. добавить элемент “Изменить границы таблицы”
+function borderChanger() {
+    let div = createFunction('Изменить границы таблицы');
+
+    let form = document.createElement('form'),
+        select = document.createElement('select'),
+        inputBorderWidth = document.createElement('input'),
+        button = document.createElement('button'),
+        option = document.createElement('option')
+    ;
+
+    inputBorderWidth.type = 'text';
+    inputBorderWidth.style.width = '140px';
+
+    button.type = 'button';
+    button.style.display = 'block';
+    button.style.maxWidth = '144px';
+    button.innerText = 'Применить';
+
+    select.style.width = '144px';
+
+    option.innerText = 'Выберите стиль рамки';
+    select.appendChild(option);
+
+    getBorderOptions().forEach((option) =>
+        select.appendChild(option)
+    );
+
+    inputBorderWidth.onchange = () => {
+        button.innerText = 'Применить' + ' ' + inputBorderWidth.value + ' px ';
+        if (select.value !== '') {
+            button.innerText += ' и рамка ' + select.value;
+        }
+    };
+
+    select.onchange = () => {
+        if (inputBorderWidth.value !== '') {
+            button.innerText = button.innerText = 'Применить' + ' ' + inputBorderWidth.value + ' px ' +
+                'и рамка ' + select.value;
+        } else {
+            button.innerText = 'Применить' + ' ' + 'рамка ' + select.value;
+        }
+    };
+
+    button.onclick = () => {
+        let tdList = document.querySelectorAll('td');
+        tdList.forEach((td) =>
+            td.style.border = `${inputBorderWidth.value}px ${select.value}`
+        );
+    };
+
+    form.appendChild(select);
+    form.appendChild(inputBorderWidth);
+    form.appendChild(button);
+    div.appendChild(form);
+    return div;
+}
+
+function getBorderOptions() {
+    let borderOptions = [];
+    ['dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset'].forEach(
+        (borderStyle) => {
+            let option = document.createElement('option');
+            option.innerText = borderStyle;
+            borderOptions.push(option);
+        }
+    );
+    return borderOptions;
 }
 
 
