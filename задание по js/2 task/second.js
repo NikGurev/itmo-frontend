@@ -229,8 +229,13 @@ function deleteRow() {
     button.innerText = 'Удалить';
 
     button.onclick = () => {
-        document.querySelectorAll('tr')[inputElement.value - 1]
-            .remove();
+        let tableRows = document.querySelectorAll('tr');
+        if (inputElement.value < 1 || inputElement.value > tableRows.length
+            || inputElement.value.match(/([^0-9])/g)) {
+            alert('Некорректное число! Попробуйте еще раз.');
+        } else {
+            tableRows[inputElement.value - 1].remove();
+        }
     };
 
     form.appendChild(inputElement);
