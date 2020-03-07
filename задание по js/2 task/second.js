@@ -105,6 +105,7 @@ function createFunctionPanel() {
     ;
     divWrapper.className = 'function_container';
     divWrapper.appendChild(borderChanger());
+    divWrapper.appendChild(setCaption());
     document.body.appendChild(divWrapper);
 }
 
@@ -131,6 +132,7 @@ function borderChanger() {
 
     inputBorderWidth.type = 'text';
     inputBorderWidth.style.width = '140px';
+    inputBorderWidth.style.display = 'block';
 
     button.type = 'button';
     button.style.display = 'block';
@@ -188,6 +190,34 @@ function getBorderOptions() {
     return borderOptions;
 }
 
+// 6. добавить элемент “Добавить заголовок”.
+function setCaption() {
+    let div = createFunction('Добавить заголовок');
+    let form = document.createElement('form'),
+        inputElement = document.createElement('input'),
+        button = document.createElement('button')
+    ;
+
+    inputElement.type = 'text';
+    inputElement.style.width = '140px';
+    button.type = 'button';
+    button.style.display = 'block';
+    button.style.maxWidth = '144px';
+    button.innerText = 'Добавить';
+
+    // После нажатия у таблицы появляется заголовок.
+    button.onclick = () => {
+        let caption = document.createElement('caption');
+        caption.innerText = inputElement.value;
+        document.querySelector('table').appendChild(caption);
+
+    };
+
+    form.appendChild(inputElement);
+    form.appendChild(button);
+    div.appendChild(form);
+    return div;
+}
 
 
 
