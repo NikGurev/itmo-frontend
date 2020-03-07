@@ -106,6 +106,7 @@ function createFunctionPanel() {
     divWrapper.className = 'function_container';
     divWrapper.appendChild(borderChanger());
     divWrapper.appendChild(setCaption());
+    divWrapper.appendChild(deleteRow());
     document.body.appendChild(divWrapper);
 }
 
@@ -219,6 +220,31 @@ function setCaption() {
     return div;
 }
 
+// 7. добавить элемент “Удалить строку”
+function deleteRow() {
+    let div = createFunction('Удалить строку');
+    let form = document.createElement('form'),
+        inputElement = document.createElement('input'),
+        button = document.createElement('button')
+    ;
+
+    inputElement.type = 'text';
+    inputElement.style.width = '140px';
+    button.type = 'button';
+    button.style.display = 'block';
+    button.style.maxWidth = '144px';
+    button.innerText = 'Удалить';
+
+    button.onclick = () => {
+        document.querySelectorAll('tr')[inputElement.value - 1]
+            .remove();
+    };
+
+    form.appendChild(inputElement);
+    form.appendChild(button);
+    div.appendChild(form);
+    return div;
+}
 
 
 
