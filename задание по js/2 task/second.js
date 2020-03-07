@@ -135,12 +135,8 @@ function borderChanger() {
     ;
 
     inputBorderWidth.type = 'text';
-    inputBorderWidth.style.width = '140px';
-    inputBorderWidth.style.display = 'block';
 
     button.type = 'button';
-    button.style.display = 'block';
-    button.style.maxWidth = '144px';
     button.innerText = 'Применить';
 
     select.style.width = '144px';
@@ -203,10 +199,7 @@ function setCaption() {
     ;
 
     inputElement.type = 'text';
-    inputElement.style.width = '140px';
     button.type = 'button';
-    button.style.display = 'block';
-    button.style.maxWidth = '144px';
     button.innerText = 'Добавить';
 
     // После нажатия у таблицы появляется заголовок.
@@ -232,10 +225,7 @@ function deleteRow() {
     ;
 
     inputElement.type = 'text';
-    inputElement.style.width = '140px';
     button.type = 'button';
-    button.style.display = 'block';
-    button.style.maxWidth = '144px';
     button.innerText = 'Удалить';
 
     button.onclick = () => {
@@ -256,8 +246,6 @@ function deleteTable() {
     ;
 
     button.type = 'button';
-    button.style.display = 'block';
-    button.style.maxWidth = '144px';
     button.innerText = 'Удалить таблицу';
 
     button.onclick = () => {
