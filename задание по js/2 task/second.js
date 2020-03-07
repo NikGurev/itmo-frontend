@@ -46,6 +46,8 @@ button.onclick = () => {
         document.getElementById('rows').value,
     );
     createFunctionPanel();
+    inputCols.value = '';
+    inputRows.value = '';
 };
 
 form.appendChild(button);
@@ -107,6 +109,7 @@ function createFunctionPanel() {
     divWrapper.appendChild(borderChanger());
     divWrapper.appendChild(setCaption());
     divWrapper.appendChild(deleteRow());
+    divWrapper.appendChild(deleteTable());
     document.body.appendChild(divWrapper);
 }
 
@@ -246,6 +249,26 @@ function deleteRow() {
     return div;
 }
 
+// 9. добавить элемент “Удалить”
+function deleteTable() {
+    let div = createFunction('Удалить');
+    let button = document.createElement('button')
+    ;
+
+    button.type = 'button';
+    button.style.display = 'block';
+    button.style.maxWidth = '144px';
+    button.innerText = 'Удалить таблицу';
+
+    button.onclick = () => {
+        form.style.display = 'block';
+        document.querySelector('table').remove();
+        document.querySelector('div.function_container').remove();
+
+    };
+    div.appendChild(button);
+    return div;
+}
 
 
 
