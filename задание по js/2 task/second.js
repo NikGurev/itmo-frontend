@@ -40,11 +40,12 @@ button.style.marginTop = '5px';
 
 // По нажатию на кнопку создается таблица (страница не перезагружается). Форму создания таблицы спрятать
 button.onclick = () => {
+    form.style.display = 'none';
     createTable(
         document.getElementById('cols').value,
         document.getElementById('rows').value,
     );
-    form.style.display = 'none';
+    createFunctionPanel();
 };
 
 form.appendChild(button);
@@ -98,6 +99,20 @@ function createTableCellContent(td) {
     return form;
 }
 
+function createFunctionPanel() {
+    let divWrapper = document.createElement('div')
+    ;
+    divWrapper.className = 'function_container';
+    divWrapper.appendChild(createFunction('Изменить границы таблицы'));
+    document.body.appendChild(divWrapper);
+}
+
+function createFunction(functionName) {
+    let div = document.createElement('div');
+    div.className = 'function';
+    div.innerText = functionName;
+    return div;
+}
 
 
 
