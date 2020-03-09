@@ -81,6 +81,7 @@ function createTableCell() {
 
 // 3
 function createTableCellContent(td) {
+    td.innerHTML = '';
     let form = document.createElement('form'),
         textarea = document.createElement('textarea'),
         button = document.createElement('button')
@@ -109,6 +110,7 @@ function createFunctionPanel() {
     divWrapper.appendChild(borderChanger());
     divWrapper.appendChild(setCaption());
     divWrapper.appendChild(deleteRow());
+    divWrapper.appendChild(createDivRandomContent());
     divWrapper.appendChild(deleteTable());
     document.body.appendChild(divWrapper);
 }
@@ -242,6 +244,74 @@ function deleteRow() {
     form.appendChild(button);
     div.appendChild(form);
     return div;
+}
+
+// 8. добавить элемент “Случайный выбор”
+function createDivRandomContent() {
+    let div = createFunction('Случайный выбор');
+    let button = document.createElement('button')
+    ;
+
+    button.type = 'button';
+    button.innerText = 'Magic';
+
+    button.onclick = () => {
+        let td = chooseRandomTableDataCell();
+        magic(td);
+    };
+    div.appendChild(button);
+    return div;
+}
+
+function magic(td) {
+    if (randomInteger(1, 15) === 7) {
+        td.appendChild(createTableCellContent(td));
+    } else {
+        chooseRandomBgColor(td);
+        chooseRandomFontStyle(td);
+    }
+}
+
+function chooseRandomTableDataCell() {
+    let tableRowList = document.querySelectorAll('tr');
+    let tableRowIndex = randomInteger(0, tableRowList.length - 1);
+    let tableDataCellIndex = randomInteger(0, tableRowList[tableRowIndex].cells.length - 1);
+    return tableRowList[tableRowIndex].cells[tableDataCellIndex];
+}
+
+
+function setRandomColor() {
+    let hexTable = "0123456789ABCDEF";
+    let newColor = '#';
+    for (let i = 0; i < 6; i++) {
+        newColor += hexTable[randomInteger(0, hexTable.length - 1)];
+    }
+    console.log(newColor);
+    return newColor;
+}
+
+function chooseRandomBgColor(td) {
+    td.style.backgroundColor = setRandomColor();
+}
+
+function chooseRandomFontStyle(td) {
+    let newColor = setRandomColor();
+    let newFontSize = randomInteger(15, 25) + 'pt';
+    td.style.color = newColor;
+    td.style.fontSize = newFontSize;
+    // td => form => {textarea, button}
+    if (typeof td.childNodes[0] !== 'undefined') {
+        td.childNodes[0].childNodes.forEach((elem) => {
+            elem.style.color = newColor;
+            elem.style.fontSize = newFontSize;
+        });
+    }
+}
+
+function randomInteger(min, max) {
+    // случайное число от min до (max+1)
+    let rand = min + Math.random() * (max + 1 - min);
+    return Math.floor(rand);
 }
 
 // 9. добавить элемент “Удалить”
