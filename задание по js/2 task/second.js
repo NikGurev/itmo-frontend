@@ -19,9 +19,6 @@ labelCols.innerText = 'Количество столбцов';
 labelCols.htmlFor = 'cols';
 labelCols.style.display = 'block';
 
-form.appendChild(labelCols);
-form.appendChild(inputCols);
-
 inputRows.type = 'text';
 inputRows.id = 'rows';
 inputRows.style.display = 'block';
@@ -29,9 +26,6 @@ inputRows.style.display = 'block';
 labelRows.innerText = 'Количество строк';
 labelRows.htmlFor = 'rows';
 labelRows.style.display = 'block';
-
-form.appendChild(labelRows);
-form.appendChild(inputRows);
 
 button.type = 'button';
 button.innerText = 'тест';
@@ -46,11 +40,11 @@ button.onclick = () => {
         document.getElementById('rows').value,
     );
     createFunctionPanel();
-    inputCols.value = '';
-    inputRows.value = '';
+    form.reset();
 };
 
-form.appendChild(button);
+form.append(labelCols, inputCols,
+            labelRows, inputRows, button);
 document.body.appendChild(form);
 
 function createTable(cols, rows) {
@@ -108,10 +102,10 @@ function createFunctionPanel() {
     ;
     divWrapper.className = 'function_container';
     divWrapper.appendChild(borderChanger());
-    divWrapper.appendChild(setCaption());
-    divWrapper.appendChild(deleteRow());
-    divWrapper.appendChild(createDivRandomContent());
-    divWrapper.appendChild(deleteTable());
+    divWrapper.appendChild(captionChanger());
+    divWrapper.appendChild(rowDeleter());
+    divWrapper.appendChild(divRandomContentCreator());
+    divWrapper.appendChild(tableDeleter());
     document.body.appendChild(divWrapper);
 }
 
@@ -193,7 +187,7 @@ function getBorderOptions() {
 }
 
 // 6. добавить элемент “Добавить заголовок”.
-function setCaption() {
+function captionChanger() {
     let div = createFunction('Добавить заголовок');
     let form = document.createElement('form'),
         inputElement = document.createElement('input'),
@@ -212,14 +206,13 @@ function setCaption() {
 
     };
 
-    form.appendChild(inputElement);
-    form.appendChild(button);
+    form.append(inputElement, button);
     div.appendChild(form);
     return div;
 }
 
 // 7. добавить элемент “Удалить строку”
-function deleteRow() {
+function rowDeleter() {
     let div = createFunction('Удалить строку');
     let form = document.createElement('form'),
         inputElement = document.createElement('input'),
@@ -247,7 +240,7 @@ function deleteRow() {
 }
 
 // 8. добавить элемент “Случайный выбор”
-function createDivRandomContent() {
+function divRandomContentCreator() {
     let div = createFunction('Случайный выбор');
     let button = document.createElement('button')
     ;
@@ -263,6 +256,13 @@ function createDivRandomContent() {
     return div;
 }
 
+function chooseRandomTableDataCell() {
+    let tableRowList = document.querySelectorAll('tr');
+    let tableRowIndex = randomInteger(0, tableRowList.length - 1);
+    let tableDataCellIndex = randomInteger(0, tableRowList[tableRowIndex].cells.length - 1);
+    return tableRowList[tableRowIndex].cells[tableDataCellIndex];
+}
+
 function magic(td) {
     if (randomInteger(1, 15) === 7) {
         td.appendChild(createTableCellContent(td));
@@ -271,14 +271,6 @@ function magic(td) {
         chooseRandomFontStyle(td);
     }
 }
-
-function chooseRandomTableDataCell() {
-    let tableRowList = document.querySelectorAll('tr');
-    let tableRowIndex = randomInteger(0, tableRowList.length - 1);
-    let tableDataCellIndex = randomInteger(0, tableRowList[tableRowIndex].cells.length - 1);
-    return tableRowList[tableRowIndex].cells[tableDataCellIndex];
-}
-
 
 function setRandomColor() {
     let hexTable = "0123456789ABCDEF";
@@ -299,7 +291,9 @@ function chooseRandomFontStyle(td) {
     let newFontSize = randomInteger(15, 25) + 'pt';
     td.style.color = newColor;
     td.style.fontSize = newFontSize;
-    // td => form => {textarea, button}
+    /* если форма есть, то для каждого её внутреннего 
+    тега задаем стиль
+    */
     if (typeof td.childNodes[0] !== 'undefined') {
         td.childNodes[0].childNodes.forEach((elem) => {
             elem.style.color = newColor;
@@ -315,7 +309,7 @@ function randomInteger(min, max) {
 }
 
 // 9. добавить элемент “Удалить”
-function deleteTable() {
+function tableDeleter() {
     let div = createFunction('Удалить');
     let button = document.createElement('button')
     ;
