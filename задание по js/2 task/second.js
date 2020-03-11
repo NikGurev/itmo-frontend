@@ -135,9 +135,9 @@ function borderChanger() {
     button.type = 'button';
     button.innerText = 'Применить';
 
-    select.style.width = '144px';
-
     option.innerText = 'Выберите стиль рамки';
+    option.disabled = true;
+    option.selected = true;
     select.appendChild(option);
 
     getBorderOptions().forEach((option) =>
