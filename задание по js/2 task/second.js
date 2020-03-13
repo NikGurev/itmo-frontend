@@ -98,14 +98,13 @@ function createTableCellContent(td) {
 
 // 4. Оформление блока с функцией
 function createFunctionPanel() {
-    let divWrapper = document.createElement('div')
-    ;
+    let divWrapper = document.createElement('div');
     divWrapper.className = 'function_container';
-    divWrapper.appendChild(borderChanger());
-    divWrapper.appendChild(captionChanger());
-    divWrapper.appendChild(rowDeleter());
-    divWrapper.appendChild(divRandomContentCreator());
-    divWrapper.appendChild(tableDeleter());
+    divWrapper.append(borderChanger(),
+        captionChanger(),
+        rowDeleter(),
+        divRandomContentCreator(),
+        tableDeleter());
     document.body.appendChild(divWrapper);
 }
 
@@ -140,13 +139,11 @@ function borderChanger() {
     option.selected = true;
     select.appendChild(option);
 
-    getBorderOptions().forEach((option) =>
-        select.appendChild(option)
-    );
+    getBorderOptions().forEach((option) => select.appendChild(option));
 
-    inputBorderWidth.onchange = () => {
+    inputBorderWidth.oninput = () => {
         button.innerText = 'Применить' + ' ' + inputBorderWidth.value + ' px ';
-        if (select.value !== '') {
+        if (select.value !== '' && select.value !== 'Выберите стиль рамки') {
             button.innerText += ' и рамка ' + select.value;
         }
     };
@@ -167,9 +164,7 @@ function borderChanger() {
         );
     };
 
-    form.appendChild(select);
-    form.appendChild(inputBorderWidth);
-    form.appendChild(button);
+    form.append(select, inputBorderWidth, button);
     div.appendChild(form);
     return div;
 }
@@ -233,8 +228,7 @@ function rowDeleter() {
         }
     };
 
-    form.appendChild(inputElement);
-    form.appendChild(button);
+    form.append(inputElement, button);
     div.appendChild(form);
     return div;
 }
