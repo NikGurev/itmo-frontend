@@ -27,7 +27,6 @@ $(document).ready(function() {
     Добавить фиксированную кнопку (правый верхний угол) на страницу по
     на которую что то происходит
     */
-
     $('body').append('<button id = "cancel">Cancel</button>');
     $("#cancel").click(function () {
 
@@ -51,12 +50,24 @@ $(document).ready(function() {
         $("#fadeIn").parent().siblings().children().fadeIn();
     });
 
+    $("#fadeTo").click(() => {
+        $("#fadeTo").parent().siblings().children().fadeTo(1000, 0.4, "linear", () => alert('Fade To succeded!'));
+    });
+
+    $("#slideDown").click(() => {
+        $("#slideDown").parent().siblings().children().slideDown();
+    });
+
+    $("#slideToggle").click(() => {
+        $("#slideToggle").parent().siblings().children().slideToggle();
+    });
+
+    $("#toggle").click(() => {
+        $("#toggle").parent().siblings().children().toggle();
+    });
 });
+
 // AJAX Запросы в JQUERY
-
-// http://jquery.page2page.ru/index.php5/Ajax-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81
-
-
 $("#ajax").click(() => {
     $.ajax({
         url: "https://inxaoc.github.io/example/ajax-1.html"
@@ -67,7 +78,6 @@ $("#ajax").click(() => {
     });
 });
 
-
 $.ajax({
     url: "https://inxaoc.github.io/example/ajax.json"
 }).done((e) => {
@@ -76,13 +86,13 @@ $.ajax({
     $("body").append(createList(req));
 });
 
-
 //prop - key, req[prop] - value
 /*
 1. Вызываем цикл
 2. Если value - объект, то выводим key
 	и далее начинаем перебирать его вложенные члены
-3. Если value - не объект, то выводим value*/
+3. Если value - не объект, то выводим value
+*/
 function createList(element) {
     let ul = document.createElement('ul');
     for (const props in element) {
