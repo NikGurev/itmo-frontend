@@ -28,7 +28,7 @@ labelRows.htmlFor = 'rows';
 labelRows.style.display = 'block';
 
 button.type = 'button';
-button.innerText = 'тест';
+button.innerText = 'Создать таблицу';
 button.style.marginTop = '5px';
 
 
@@ -91,8 +91,7 @@ function createTableCellContent(td) {
         form.remove();
     };
 
-    form.appendChild(textarea);
-    form.appendChild(button);
+    form.append(textarea, button);
     return form;
 }
 
@@ -118,55 +117,87 @@ function createFunction(functionName) {
     return div;
 }
 
+class defaultFunction {
+    constructor(functionName, buttonName, withInput = true) {
+        this.div = createFunction(functionName);
+        this.form = document.createElement('form');
+        this.button = document.createElement('button');
+
+        this.button.type = 'button';
+        this.button.innerText = buttonName;
+        if (withInput) {
+            this.inputElement = document.createElement('input');
+            this.inputElement.type = 'text';
+            this.form.append(this.inputElement);
+        }
+        this.form.append(this.button);
+        this.div.append(this.form);
+    }
+
+    getDiv() {
+        return this.div;
+    }
+
+    getInputValue() {
+        return this.inputElement.value;
+    }
+
+    addFormElement(HTMLElement) {
+        this.form.prepend(HTMLElement);
+    }
+
+    addOnButtonListener(onClickFunction) {
+        this.button.onclick = onClickFunction;
+    }
+};
+
 // 5. добавить элемент “Изменить границы таблицы”
 function borderChanger() {
-    let div = createFunction('Изменить границы таблицы');
+    let func = new defaultFunction(
+        'Изменить границы таблицы',
+        'Применить',
+    );
 
-    let form = document.createElement('form'),
-        select = document.createElement('select'),
-        inputBorderWidth = document.createElement('input'),
-        button = document.createElement('button'),
-        option = document.createElement('option')
-    ;
+    func.addOnButtonListener(() => {
+        let tdList = document.querySelectorAll('td');
+        tdList.forEach((td) =>
+            td.style.border = `${func.getInputValue()}px ${select.value}`
+        );
+    });
 
-    inputBorderWidth.type = 'text';
+    func.inputElement.oninput = () => {
+        func.button.innerText = 'Применить' + ' ' + func.getInputValue() + ' px ';
+        if (select.value !== '' && select.value !== 'Выберите стиль рамки') {
+            func.button.innerText += ' и рамка ' + select.value;
+        }
+    };
 
-    button.type = 'button';
-    button.innerText = 'Применить';
+    let select = createHTMLSelectElement(func);
+
+    getBorderOptions().forEach((option) => select.appendChild(option));
+
+    func.addFormElement(select);
+    return func.getDiv();
+}
+
+function createHTMLSelectElement(func) {
+    let select = document.createElement('select'),
+        option = document.createElement('option');
 
     option.innerText = 'Выберите стиль рамки';
     option.disabled = true;
     option.selected = true;
     select.appendChild(option);
 
-    getBorderOptions().forEach((option) => select.appendChild(option));
-
-    inputBorderWidth.oninput = () => {
-        button.innerText = 'Применить' + ' ' + inputBorderWidth.value + ' px ';
-        if (select.value !== '' && select.value !== 'Выберите стиль рамки') {
-            button.innerText += ' и рамка ' + select.value;
-        }
-    };
-
     select.onchange = () => {
-        if (inputBorderWidth.value !== '') {
-            button.innerText = button.innerText = 'Применить' + ' ' + inputBorderWidth.value + ' px ' +
+        if (func.getInputValue() !== '') {
+            func.button.innerText = button.innerText = 'Применить' + ' ' + func.getInputValue() + ' px ' +
                 'и рамка ' + select.value;
         } else {
-            button.innerText = 'Применить' + ' ' + 'рамка ' + select.value;
+            func.button.innerText = 'Применить' + ' ' + 'рамка ' + select.value;
         }
     };
-
-    button.onclick = () => {
-        let tdList = document.querySelectorAll('td');
-        tdList.forEach((td) =>
-            td.style.border = `${inputBorderWidth.value}px ${select.value}`
-        );
-    };
-
-    form.append(select, inputBorderWidth, button);
-    div.appendChild(form);
-    return div;
+    return select;
 }
 
 function getBorderOptions() {
@@ -183,78 +214,51 @@ function getBorderOptions() {
 
 // 6. добавить элемент “Добавить заголовок”.
 function captionChanger() {
-    let div = createFunction('Добавить заголовок');
-    let form = document.createElement('form'),
-        inputElement = document.createElement('input'),
-        button = document.createElement('button')
-    ;
+    let func = new defaultFunction(
+        'Добавить заголовок',
+        'Добавить',
+    );
 
-    inputElement.type = 'text';
-    button.type = 'button';
-    button.innerText = 'Добавить';
-
-    // После нажатия у таблицы появляется заголовок.
-    button.onclick = () => {
+    func.addOnButtonListener(() => {
         let caption = document.createElement('caption');
-        caption.innerText = inputElement.value;
+        caption.innerText = func.getInputValue();
         document.querySelector('table').appendChild(caption);
+    });
 
-    };
-
-    form.append(inputElement, button);
-    div.appendChild(form);
-    return div;
+    return func.getDiv();
 }
 
 // 7. добавить элемент “Удалить строку”
 function rowDeleter() {
-    let div = createFunction('Удалить строку');
-    let form = document.createElement('form'),
-        inputElement = document.createElement('input'),
-        button = document.createElement('button')
-    ;
+    let func = new defaultFunction(
+        'Удалить строку',
+        'Удалить',
+    );
 
-    inputElement.type = 'text';
-    button.type = 'button';
-    button.innerText = 'Удалить';
-
-    button.onclick = () => {
+    func.addOnButtonListener(() => {
         let tableRows = document.querySelectorAll('tr');
-        if (inputElement.value < 1 || inputElement.value > tableRows.length
-            || inputElement.value.match(/([^0-9])/g)) {
+        if (func.getInputValue() < 1 || func.getInputValue() > tableRows.length
+            || func.getInputValue().match(/([^0-9])/g)) {
             alert('Некорректное число! Попробуйте еще раз.');
         } else {
-            tableRows[inputElement.value - 1].remove();
+            tableRows[func.getInputValue() - 1].remove();
         }
-    };
-
-    form.append(inputElement, button);
-    div.appendChild(form);
-    return div;
+    });
+    return func.getDiv();
 }
 
 // 8. добавить элемент “Случайный выбор”
 function divRandomContentCreator() {
-    let div = createFunction('Случайный выбор');
-    let button = document.createElement('button')
-    ;
+    let func = new defaultFunction(
+        'Случайный выбор',
+        'Magic',
+        false
+    );
 
-    button.type = 'button';
-    button.innerText = 'Magic';
-
-    button.onclick = () => {
-        let td = chooseRandomTableDataCell();
-        magic(td);
-    };
-    div.appendChild(button);
-    return div;
-}
-
-function chooseRandomTableDataCell() {
-    let tableRowList = document.querySelectorAll('tr');
-    let tableRowIndex = randomInteger(0, tableRowList.length - 1);
-    let tableDataCellIndex = randomInteger(0, tableRowList[tableRowIndex].cells.length - 1);
-    return tableRowList[tableRowIndex].cells[tableDataCellIndex];
+    func.addOnButtonListener(() => {
+        magic(chooseRandomTableDataCell());
+    });
+    return func.getDiv();
 }
 
 function magic(td) {
@@ -264,6 +268,13 @@ function magic(td) {
         chooseRandomBgColor(td);
         chooseRandomFontStyle(td);
     }
+}
+
+function chooseRandomTableDataCell() {
+    let tableRowList = document.querySelectorAll('tr');
+    let tableRowIndex = randomInteger(0, tableRowList.length - 1);
+    let tableDataCellIndex = randomInteger(0, tableRowList[tableRowIndex].cells.length - 1);
+    return tableRowList[tableRowIndex].cells[tableDataCellIndex];
 }
 
 function setRandomColor() {
@@ -304,23 +315,16 @@ function randomInteger(min, max) {
 
 // 9. добавить элемент “Удалить”
 function tableDeleter() {
-    let div = createFunction('Удалить');
-    let button = document.createElement('button')
-    ;
+    let func = new defaultFunction(
+        'Удалить',
+        'Удалить таблицу',
+        false
+    );
 
-    button.type = 'button';
-    button.innerText = 'Удалить таблицу';
-
-    button.onclick = () => {
+    func.addOnButtonListener(() => {
         form.style.display = 'block';
         document.querySelector('table').remove();
         document.querySelector('div.function_container').remove();
-
-    };
-    div.appendChild(button);
-    return div;
+    });
+    return func.getDiv();
 }
-
-
-
-
