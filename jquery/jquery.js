@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    // работа с селекторами
+// работа с селекторами
     $("p").css("fontSize", "20px");
     $(".paragraph").css("color", "red");
     $(".anchor").css({
@@ -10,7 +10,7 @@ $(document).ready(function() {
     });
     $("form *").prop("disabled", true);
 
-
+// РАБОТА С DOM
     $("a").prepend("↖");
     $("a").attr("target", "_blank");
     // изменить все ссылки http на https 
@@ -35,7 +35,6 @@ $(document).ready(function() {
 // http://jquery.page2page.ru/index.php5/Ajax-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81
 
 
-
 $("#ajax").click(() => {
     $.ajax({
         url: "https://inxaoc.github.io/example/ajax-1.html"
@@ -47,7 +46,6 @@ $("#ajax").click(() => {
 });
 
 
-
 $.ajax({
     url: "https://inxaoc.github.io/example/ajax.json"
 }).done((e) => {
@@ -57,7 +55,6 @@ $.ajax({
 });
 
 
-
 //prop - key, req[prop] - value
 /*
 1. Вызываем цикл
@@ -65,10 +62,10 @@ $.ajax({
 	и далее начинаем перебирать его вложенные члены
 3. Если value - не объект, то выводим value*/
 function createList(element) {
-	let ul = document.createElement('ul');
+    let ul = document.createElement('ul');
     for (const props in element) {
         let li = document.createElement('li');
-        if (typeof(element[props]) !== 'object') {
+        if (typeof (element[props]) !== 'object') {
             li.innerText = element[props];
         } else {
             li.innerText = props;
