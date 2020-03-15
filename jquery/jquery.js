@@ -1,9 +1,12 @@
 $(document).ready(function() {
+
+    // работа с селекторами
     $("p").css("fontSize", "20px");
     $(".paragraph").css("color", "red");
     $(".anchor").css({
         "backgroundColor": "#F3F2F1",
-        "textDecoration": "none"
+        "textDecoration": "none",
+        "color": "green"
     });
     $("form *").prop("disabled", true);
 
