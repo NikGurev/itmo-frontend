@@ -12,15 +12,37 @@ $(document).ready(function() {
 
 // РАБОТА С DOM
     $("a").prepend("↖");
-    $("a").attr("target", "_blank");
-    // изменить все ссылки http на https 
-    // $("a").each((anchor) => {
-    // 	let 
-    // });
-    //Добавить фиксированную кнопку (правый верхний угол) на страницу по
-    // на которую что то происходит
+    $("a").attr("target", "_blank")
+    $("a").each(function () {
+        $(this).attr("href", function (index, value) {
+            let protocol = value.substring(0, value.indexOf(':'));
+            if (protocol === 'http') {
+                let href = value.substring(value.indexOf(':'), value.length);
+                return protocol + 's' + href;
+            }
+        });
+    });
 
-    // эффекты
+    /*
+    Добавить фиксированную кнопку (правый верхний угол) на страницу по
+    на которую что то происходит
+    */
+
+    $('body').append('<button id = "cancel">Cancel</button>');
+    $("#cancel").click(function () {
+
+        $("a").each(function () {
+            $(this).text(function (index, text) {
+                if (text.substr(0, 1) === '↖') {
+                    return text.substring(1, text.length);
+                }
+            });
+        });
+
+        $("form *").prop("disabled", false);
+    });
+
+    // ЭФФЕКТЫ JQUERY
     $("#fadeOut").click(() => {
         $("#fadeOut").parent().siblings().children().fadeOut();
     });
@@ -51,7 +73,7 @@ $.ajax({
 }).done((e) => {
     let req = Object.assign({}, e);
     console.log(req);
-    $("body").append(isObject(req));
+    $("body").append(createList(req));
 });
 
 
@@ -70,7 +92,7 @@ function createList(element) {
         } else {
             li.innerText = props;
             // добавляет вложенный список в li
-            li.append(isObject(element[props]));
+            li.append(createList(element[props]));
         }
         ul.append(li);
     }
