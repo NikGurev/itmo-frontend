@@ -1,7 +1,7 @@
-<div class="table">
+<div class="table" #table>
 <div *ngFor="let tr of tableSize" class="table_row">
-  <div *ngFor="let td of tableSize" class="table_cell">
-    sample data cell
+  <div *ngFor="let td of tableSize" class="table_cell susceptible">
   </div>
 </div>
 </div>
+<button (click)="infect()">Step</button>
