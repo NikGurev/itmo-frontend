@@ -1,0 +1,31 @@
+@mixin width-height {
+  width: 30px;
+  height: 30px;
+}
+
+.table {
+  display: table;
+  border-spacing: 5px;
+  margin: 0 auto;
+
+&_row {
+   display: table-row;
+
+ }
+
+&_cell {
+   display: table-cell;
+ @include width-height;
+   padding: 5px;
+
+
+ }
+}
+
+.susceptible {
+  background-color: #e2e2e2;
+}
+
+.infected {
+  background-color: #ff2e36;
+}
