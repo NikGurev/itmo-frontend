@@ -1,0 +1,10 @@
+.table {
+  display: table;
+   &_row {
+     display: table-row;
+
+   }
+  &_cell {
+    display: table-cell;
+  }
+}
