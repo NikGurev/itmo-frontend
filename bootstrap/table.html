@@ -8,20 +8,122 @@
     <title>Таблица</title>
     <link rel="alternate" type="application/rss+xml"
           title="Статьи с сайта htmlbook.ru" href="http://htmlbook.ru/rss.xml">
-    <link rel="shortcut icon" href="https://itmo.ru/pic/favicon.ico">
+    <link rel="icon" href="favicon.png">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
 </head>
 
 <body>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ошибка!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Данные не получены или некорректны. Попробуйте зайти на главную страницу и повторить еще раз.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(window).on('load', function(){
+        if (!isParamsCorrect(hrefQueryParams)) {
+            $('#exampleModal').modal('show');
+        } else {
+            createTable(
+                hrefQueryParams.cols,
+                hrefQueryParams.rows,
+            );
+        }
+    });
+
+    var hrefQueryParams = getQueryParams(document.location.href);
+    console.log(hrefQueryParams);
+
+
+    function getQueryParams(href) {
+        let queryParams = {};
+        href.substring(href.indexOf('?') + 1, href.length).split('&')
+            .forEach(param => {
+                const paramKeyValue = param.split('=');
+                queryParams[paramKeyValue[0]] = paramKeyValue[1];
+            });
+        return queryParams;
+    }
+
+    function isParamsCorrect(queryParams) {
+        return queryParams.length !== 0 &&
+            Object.values(queryParams).every((param) => param != '' && Number.isInteger(+param) && param > 0);
+    }
+
+    function createTable(cols, rows) {
+        let table = document.createElement('table');
+        table.className = 'table table-bordered';
+
+        for (let i = 0; i < rows; i++) {
+            let tr = document.createElement('tr');
+            for (let j = 0; j < cols; j++) {
+                let td = createTableCell();
+                tr.append(td);
+            }
+            table.append(tr);
+        }
+        document.body.append(table);
+    }
+
+    function createTableCell() {
+        let td = document.createElement('td');
+        // td.onmousemove = () => td.style.backgroundColor = '#cecece';
+        // td.onmouseout = () => td.style.backgroundColor = 'white';
+        td.appendChild(createTableCellContent(td));
+        return td;
+    }
+
+    // 3
+    function createTableCellContent(td) {
+        td.innerHTML = '';
+        let form = document.createElement('form'),
+            textarea = document.createElement('textarea'),
+            button = document.createElement('button'),
+            div = document.createElement('div')
+        ;
+        div.className = 'form-group';
+        button.innerText = 'Сохранить';
+        button.className = 'btn btn-dark btn-lg btn-block';
+        textarea.className = 'form-control';
+        // После нажатия на «сохранить», эта форма пропадает, а вместо нее появляется введенный пользователем текст.
+        button.onclick = () => {
+            td.innerText = button.previousSibling.value;
+            form.remove();
+        };
+
+        form.append(textarea, button);
+        div.append(form);
+        return div;
+    }
 
 
 
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
+
+
+</script>
+
+
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>
