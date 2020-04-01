@@ -10,6 +10,8 @@
           title="Статьи с сайта htmlbook.ru" href="http://htmlbook.ru/rss.xml">
     <link rel="icon" href="favicon.png">
 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -72,54 +74,100 @@
     }
 
     function createTable(cols, rows) {
-        let table = document.createElement('table');
-        table.className = 'table table-bordered';
-
-        for (let i = 0; i < rows; i++) {
+        let div = document.createElement('div')
+            table = document.createElement('table');
+        table.className = 'table-bordered table-sm';
+        div.className = 'table-responsive';
+        // + 1 к строкам и столбцам, т.к. добавились служебные поля
+        for (let i = 0; i < +rows + 1; i++) {
             let tr = document.createElement('tr');
-            for (let j = 0; j < cols; j++) {
-                let td = createTableCell();
+            if (i === 0) {
+                tr.className = 'table-secondary';
+                for (let j = 0; j < +cols + 1; j++) {
+                    let td = document.createElement('td');
+                    td.innerText = (j === 0) ? ' ' : getLetterById(j-1);
+                    tr.append(td);
+                }
+            } else {
+            for (let j = 0; j < +cols + 1; j++) {
+                let td = createTableCell(i, j);
                 tr.append(td);
+            }
             }
             table.append(tr);
         }
-        document.body.append(table);
+        div.append(table);
+        document.body.append(div);
     }
 
-    function createTableCell() {
+    function createTableCell(rowIndex, columnIndex) {
         let td = document.createElement('td');
         // td.onmousemove = () => td.style.backgroundColor = '#cecece';
         // td.onmouseout = () => td.style.backgroundColor = 'white';
-        td.appendChild(createTableCellContent(td));
+        if (columnIndex === 0) {
+            td.innerText = getNumberById(rowIndex-1);
+            td.className = 'table-secondary';
+            td.style.padding = '.3rem 1rem .3rem 1rem';
+        } else {
+        td.append(createTableCellContent(td));
+        }
         return td;
     }
 
     // 3
-    function createTableCellContent(td) {
-        td.innerHTML = '';
+    function createTableCellContent(td, previousValue) {
+
         let form = document.createElement('form'),
             textarea = document.createElement('textarea'),
             button = document.createElement('button'),
-            div = document.createElement('div')
+            divForm = document.createElement('div')
         ;
-        div.className = 'form-group';
-        button.innerText = 'Сохранить';
-        button.className = 'btn btn-dark btn-lg btn-block';
-        textarea.className = 'form-control';
+
+        divForm.className = 'form-group';
+        button.innerHTML = '<span class="material-icons">' +
+            'save' +
+            '</span>';
+        button.className = 'btn btn-success';
+        textarea.className = 'form-control'
+        if (previousValue !== undefined) {
+        textarea.value = previousValue;
+        }
+        td.innerHTML = '';
         // После нажатия на «сохранить», эта форма пропадает, а вместо нее появляется введенный пользователем текст.
         button.onclick = () => {
-            td.innerText = button.previousSibling.value;
-            form.remove();
-        };
+            let div = document.createElement('div');
+            div.style.height = '60px';
+            div.innerText = textarea.value;
+            div.onclick = () => {
+                td.append(createTableCellContent(td, div.innerText));
+            };
+            divForm.remove();
+            td.append(div);
+            let buttonDelete = document.createElement('button');
+            buttonDelete.type = 'button';
+            buttonDelete.innerHTML = '<span class="material-icons">' +
+                'delete' +
+                '</span>';
+            buttonDelete.className = 'btn btn-danger';
+            buttonDelete.onclick = () => td.append(createTableCellContent(td));
+            td.append(buttonDelete);
+        }
 
         form.append(textarea, button);
-        div.append(form);
-        return div;
+        divForm.append(form);
+        return divForm;
     }
 
+    function getLetterById(id) {
+       return ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
+            'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
+            'W', 'X', 'Y', 'Z'][id];
 
+    }
 
-
+    function getNumberById(id) {
+        return [1, 2, 3, 4, 5, 6, 7, 8, 9, 0][id];
+    }
 
 </script>
 
