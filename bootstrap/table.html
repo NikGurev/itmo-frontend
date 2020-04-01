@@ -51,6 +51,7 @@
                 hrefQueryParams.cols,
                 hrefQueryParams.rows,
             );
+            createFunctionPanel();
         }
     });
 
@@ -128,7 +129,7 @@
             'save' +
             '</span>';
         button.className = 'btn btn-success';
-        textarea.className = 'form-control'
+        textarea.className = 'form-control-sm mr-2';
         if (previousValue !== undefined) {
         textarea.value = previousValue;
         }
@@ -153,6 +154,7 @@
             td.append(buttonDelete);
         }
 
+        form.className = 'form-inline';
         form.append(textarea, button);
         divForm.append(form);
         return divForm;
@@ -169,6 +171,248 @@
         return [1, 2, 3, 4, 5, 6, 7, 8, 9, 0][id];
     }
 
+
+    // 4. Оформление блока с функцией
+    function createFunctionPanel() {
+        let divWrapper = document.createElement('div');
+        divWrapper.className = 'card-group';
+        divWrapper.append(borderChanger(),
+            captionChanger(),
+            rowDeleter(),
+            divRandomContentCreator(),
+            tableDeleter());
+        document.body.append(divWrapper);
+    }
+
+    function createFunction(functionName) {
+        let cardWrapper = document.createElement('div'),
+            cardHeader = document.createElement('div'),
+            cardBody = document.createElement('div');
+        cardHeader.innerText = functionName;
+        cardWrapper.className = 'card';
+        cardHeader.className = 'card-header';
+        cardBody.className = 'card-body';
+        cardWrapper.append(cardHeader, cardBody);
+        return cardWrapper;
+    }
+
+    class defaultFunction {
+        constructor(functionName, buttonName, withInput = true) {
+            this.div = createFunction(functionName);
+            this.formWrapper = document.createElement('div');
+            this.formWrapper.className = 'form-group';
+            this.form = document.createElement('form');
+            this.button = document.createElement('button');
+            this.button.className = 'btn btn-dark btn-sm';
+
+            this.button.type = 'button';
+            this.button.innerText = buttonName;
+            if (withInput) {
+                this.inputElement = document.createElement('input');
+                this.inputElement.type = 'text';
+                this.inputElement.className = 'form-control form-control-sm mb-2';
+                this.form.append(this.inputElement);
+            }
+            this.form.append(this.button);
+            this.formWrapper.append(this.form);
+            this.div.childNodes[1].append(this.formWrapper);
+        }
+
+        getDiv() {
+            return this.div;
+        }
+
+        getInputValue() {
+            return this.inputElement.value;
+        }
+
+        addFormElement(HTMLElement) {
+            this.form.prepend(HTMLElement);
+        }
+
+        addOnButtonListener(onClickFunction) {
+            this.button.onclick = onClickFunction;
+        }
+    };
+
+    // 5. добавить элемент “Изменить границы таблицы”
+    function borderChanger() {
+        let func = new defaultFunction(
+            'Изменить границы таблицы',
+            'Применить',
+        );
+
+        func.addOnButtonListener(() => {
+            let tdList = document.querySelectorAll('td');
+            tdList.forEach((td) =>
+                td.style.border = `${func.getInputValue()}px ${select.value}`
+            );
+        });
+
+        func.inputElement.oninput = () => {
+            func.button.innerText = 'Применить' + ' ' + func.getInputValue() + ' px ';
+            if (select.value !== '' && select.value !== 'Выберите стиль рамки') {
+                func.button.innerText += ' и рамка ' + select.value;
+            }
+        };
+
+        let select = createHTMLSelectElement(func);
+        select.className = 'form-control form-control-sm mb-2';
+
+        getBorderOptions().forEach((option) => select.appendChild(option));
+
+        func.addFormElement(select);
+        return func.getDiv();
+    }
+
+    function createHTMLSelectElement(func) {
+        let select = document.createElement('select'),
+            option = document.createElement('option');
+
+        option.innerText = 'Выберите стиль рамки';
+        option.disabled = true;
+        option.selected = true;
+        select.appendChild(option);
+
+        select.onchange = () => {
+            if (func.getInputValue() !== '') {
+                func.button.innerText = button.innerText = 'Применить' + ' ' + func.getInputValue() + ' px ' +
+                    'и рамка ' + select.value;
+            } else {
+                func.button.innerText = 'Применить' + ' ' + 'рамка ' + select.value;
+            }
+        };
+        return select;
+    }
+
+    function getBorderOptions() {
+        let borderOptions = [];
+        ['dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset'].forEach(
+            (borderStyle) => {
+                let option = document.createElement('option');
+                option.innerText = borderStyle;
+                borderOptions.push(option);
+            }
+        );
+        return borderOptions;
+    }
+
+    // 6. добавить элемент “Добавить заголовок”.
+    function captionChanger() {
+        let func = new defaultFunction(
+            'Добавить заголовок',
+            'Добавить',
+        );
+
+        func.addOnButtonListener(() => {
+            let caption = document.createElement('caption');
+            caption.innerText = func.getInputValue();
+            document.querySelector('table').appendChild(caption);
+        });
+
+        return func.getDiv();
+    }
+
+    // 7. добавить элемент “Удалить строку”
+    function rowDeleter() {
+        let func = new defaultFunction(
+            'Удалить строку',
+            'Удалить',
+        );
+
+        func.addOnButtonListener(() => {
+            let tableRows = document.querySelectorAll('tr');
+            if (func.getInputValue() < 1 || func.getInputValue() > tableRows.length
+                || func.getInputValue().match(/([^0-9])/g)) {
+                alert('Некорректное число! Попробуйте еще раз.');
+            } else {
+                tableRows[func.getInputValue() - 1].remove();
+            }
+        });
+        return func.getDiv();
+    }
+
+    // 8. добавить элемент “Случайный выбор”
+    function divRandomContentCreator() {
+        let func = new defaultFunction(
+            'Случайный выбор',
+            'Magic',
+            false
+        );
+
+        func.addOnButtonListener(() => {
+            magic(chooseRandomTableDataCell());
+        });
+        return func.getDiv();
+    }
+
+    function magic(td) {
+        if (randomInteger(1, 15) === 7) {
+            td.appendChild(createTableCellContent(td));
+        } else {
+            chooseRandomBgColor(td);
+            chooseRandomFontStyle(td);
+        }
+    }
+
+    function chooseRandomTableDataCell() {
+        let tableRowList = document.querySelectorAll('tr');
+        let tableRowIndex = randomInteger(0, tableRowList.length - 1);
+        let tableDataCellIndex = randomInteger(0, tableRowList[tableRowIndex].cells.length - 1);
+        return tableRowList[tableRowIndex].cells[tableDataCellIndex];
+    }
+
+    function setRandomColor() {
+        let hexTable = "0123456789ABCDEF";
+        let newColor = '#';
+        for (let i = 0; i < 6; i++) {
+            newColor += hexTable[randomInteger(0, hexTable.length - 1)];
+        }
+        console.log(newColor);
+        return newColor;
+    }
+
+    function chooseRandomBgColor(td) {
+        td.style.backgroundColor = setRandomColor();
+    }
+
+    function chooseRandomFontStyle(td) {
+        let newColor = setRandomColor();
+        let newFontSize = randomInteger(15, 25) + 'pt';
+        td.style.color = newColor;
+        td.style.fontSize = newFontSize;
+        /* если форма есть, то для каждого её внутреннего
+        тега задаем стиль
+        */
+        if (typeof td.childNodes[0] !== 'undefined') {
+            td.childNodes[0].childNodes.forEach((elem) => {
+                elem.style.color = newColor;
+                elem.style.fontSize = newFontSize;
+            });
+        }
+    }
+
+    function randomInteger(min, max) {
+        // случайное число от min до (max+1)
+        let rand = min + Math.random() * (max + 1 - min);
+        return Math.floor(rand);
+    }
+
+    // 9. добавить элемент “Удалить”
+    function tableDeleter() {
+        let func = new defaultFunction(
+            'Удалить',
+            'Удалить таблицу',
+            false
+        );
+
+        func.addOnButtonListener(() => {
+            form.style.display = 'block';
+            document.querySelector('table').remove();
+            document.querySelector('div.function_container').remove();
+        });
+        return func.getDiv();
+    }
 </script>
 
 
