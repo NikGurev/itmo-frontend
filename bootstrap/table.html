@@ -41,380 +41,73 @@
     </div>
 </div>
 
-<script>
-
-    $(window).on('load', function(){
-        if (!isParamsCorrect(hrefQueryParams)) {
-            $('#exampleModal').modal('show');
-        } else {
-            createTable(
-                hrefQueryParams.cols,
-                hrefQueryParams.rows,
-            );
-            createFunctionPanel();
-        }
-    });
-
-    var hrefQueryParams = getQueryParams(document.location.href);
-    console.log(hrefQueryParams);
-
-
-    function getQueryParams(href) {
-        let queryParams = {};
-        href.substring(href.indexOf('?') + 1, href.length).split('&')
-            .forEach(param => {
-                const paramKeyValue = param.split('=');
-                queryParams[paramKeyValue[0]] = paramKeyValue[1];
-            });
-        return queryParams;
-    }
-
-    function isParamsCorrect(queryParams) {
-        return queryParams.length !== 0 &&
-            Object.values(queryParams).every((param) => param != '' && Number.isInteger(+param) && param > 0);
-    }
-
-    function createTable(cols, rows) {
-        let div = document.createElement('div')
-            table = document.createElement('table');
-        table.className = 'table-bordered table-sm';
-        div.className = 'table-responsive';
-        // + 1 к строкам и столбцам, т.к. добавились служебные поля
-        for (let i = 0; i < +rows + 1; i++) {
-            let tr = document.createElement('tr');
-            if (i === 0) {
-                tr.className = 'table-secondary';
-                for (let j = 0; j < +cols + 1; j++) {
-                    let td = document.createElement('td');
-                    td.innerText = (j === 0) ? ' ' : getLetterById(j-1);
-                    tr.append(td);
-                }
-            } else {
-            for (let j = 0; j < +cols + 1; j++) {
-                let td = createTableCell(i, j);
-                tr.append(td);
-            }
-            }
-            table.append(tr);
-        }
-        div.append(table);
-        document.body.append(div);
-    }
-
-    function createTableCell(rowIndex, columnIndex) {
-        let td = document.createElement('td');
-        // td.onmousemove = () => td.style.backgroundColor = '#cecece';
-        // td.onmouseout = () => td.style.backgroundColor = 'white';
-        if (columnIndex === 0) {
-            td.innerText = getNumberById(rowIndex-1);
-            td.className = 'table-secondary';
-            td.style.padding = '.3rem 1rem .3rem 1rem';
-        } else {
-        td.append(createTableCellContent(td));
-        }
-        return td;
-    }
-
-    // 3
-    function createTableCellContent(td, previousValue) {
-
-        let form = document.createElement('form'),
-            textarea = document.createElement('textarea'),
-            button = document.createElement('button'),
-            divForm = document.createElement('div')
-        ;
-
-        divForm.className = 'form-group';
-        button.innerHTML = '<span class="material-icons">' +
-            'save' +
-            '</span>';
-        button.className = 'btn btn-success';
-        textarea.className = 'form-control-sm mr-2';
-        if (previousValue !== undefined) {
-        textarea.value = previousValue;
-        }
-        td.innerHTML = '';
-        // После нажатия на «сохранить», эта форма пропадает, а вместо нее появляется введенный пользователем текст.
-        button.onclick = () => {
-            let div = document.createElement('div');
-            div.style.height = '60px';
-            div.innerText = textarea.value;
-            div.onclick = () => {
-                td.append(createTableCellContent(td, div.innerText));
-            };
-            divForm.remove();
-            td.append(div);
-            let buttonDelete = document.createElement('button');
-            buttonDelete.type = 'button';
-            buttonDelete.innerHTML = '<span class="material-icons">' +
-                'delete' +
-                '</span>';
-            buttonDelete.className = 'btn btn-danger';
-            buttonDelete.onclick = () => td.append(createTableCellContent(td));
-            td.append(buttonDelete);
-        }
-
-        form.className = 'form-inline';
-        form.append(textarea, button);
-        divForm.append(form);
-        return divForm;
-    }
-
-    function getLetterById(id) {
-       return ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
-            'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
-            'W', 'X', 'Y', 'Z'][id];
-
-    }
-
-    function getNumberById(id) {
-        return [1, 2, 3, 4, 5, 6, 7, 8, 9, 0][id];
-    }
+<div class="card-group">
+    <div class="card text-white bg-dark">
+        <div class="card-header">Изменить границы таблицы</div>
+        <div class="card-body">
+            <div class="form-group">
+            <form>
+                <select class="form-control form-control-sm mb-2"
+                        id="select"
+                        onchange="onSelectChanged(this)">
+                    <option disabled selected>
+                        Выберите стиль рамки
+                    </option>
+                </select>
+                <input class="form-control form-control-sm mb-2" type="text" oninput="onInputChanged(this)">
+                <button type="button" class="btn btn-light btn-sm" onclick="changeBorders()">Применить</button>
+            </form>
+            </div>
+        </div>
+    </div>
+    <div class="card text-white bg-dark">
+        <div class="card-header">Добавить заголовок</div>
+        <div class="card-body">
+            <div class="form-group">
+                <form>
+                    <input class="form-control form-control-sm mb-2" type="text" id="add">
+                    <button type="button" class="btn btn-light btn-sm" onclick="changeCaption(this)">Добавить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="card text-white bg-dark">
+        <div class="card-header">Удалить строку</div>
+        <div class="card-body">
+            <div class="form-group">
+                <form>
+                    <input class="form-control form-control-sm mb-2" type="text" id="delete">
+                    <button type="button" class="btn btn-light btn-sm" onclick="deleteRow(this)">Удалить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="card text-white bg-dark">
+        <div class="card-header">Случайный выбор</div>
+        <div class="card-body">
+            <div class="form-group">
+                <form>
+                    <button type="button" class="btn btn-light btn-sm"
+                            onclick="magic()">Magic</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="card text-white bg-dark">
+        <div class="card-header">Удалить</div>
+        <div class="card-body">
+            <div class="form-group">
+                <form>
+                    <button type="button" class="btn btn-light btn-sm" id="clean" onclick="cleanTable()">Очистить таблицу</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
-    // 4. Оформление блока с функцией
-    function createFunctionPanel() {
-        let divWrapper = document.createElement('div');
-        divWrapper.className = 'card-group';
-        divWrapper.append(borderChanger(),
-            captionChanger(),
-            rowDeleter(),
-            divRandomContentCreator(),
-            tableDeleter());
-        document.body.append(divWrapper);
-    }
-
-    function createFunction(functionName) {
-        let cardWrapper = document.createElement('div'),
-            cardHeader = document.createElement('div'),
-            cardBody = document.createElement('div');
-        cardHeader.innerText = functionName;
-        cardWrapper.className = 'card';
-        cardHeader.className = 'card-header';
-        cardBody.className = 'card-body';
-        cardWrapper.append(cardHeader, cardBody);
-        return cardWrapper;
-    }
-
-    class defaultFunction {
-        constructor(functionName, buttonName, withInput = true) {
-            this.div = createFunction(functionName);
-            this.formWrapper = document.createElement('div');
-            this.formWrapper.className = 'form-group';
-            this.form = document.createElement('form');
-            this.button = document.createElement('button');
-            this.button.className = 'btn btn-dark btn-sm';
-
-            this.button.type = 'button';
-            this.button.innerText = buttonName;
-            if (withInput) {
-                this.inputElement = document.createElement('input');
-                this.inputElement.type = 'text';
-                this.inputElement.className = 'form-control form-control-sm mb-2';
-                this.form.append(this.inputElement);
-            }
-            this.form.append(this.button);
-            this.formWrapper.append(this.form);
-            this.div.childNodes[1].append(this.formWrapper);
-        }
-
-        getDiv() {
-            return this.div;
-        }
-
-        getInputValue() {
-            return this.inputElement.value;
-        }
-
-        addFormElement(HTMLElement) {
-            this.form.prepend(HTMLElement);
-        }
-
-        addOnButtonListener(onClickFunction) {
-            this.button.onclick = onClickFunction;
-        }
-    };
-
-    // 5. добавить элемент “Изменить границы таблицы”
-    function borderChanger() {
-        let func = new defaultFunction(
-            'Изменить границы таблицы',
-            'Применить',
-        );
-
-        func.addOnButtonListener(() => {
-            let tdList = document.querySelectorAll('td');
-            tdList.forEach((td) =>
-                td.style.border = `${func.getInputValue()}px ${select.value}`
-            );
-        });
-
-        func.inputElement.oninput = () => {
-            func.button.innerText = 'Применить' + ' ' + func.getInputValue() + ' px ';
-            if (select.value !== '' && select.value !== 'Выберите стиль рамки') {
-                func.button.innerText += ' и рамка ' + select.value;
-            }
-        };
-
-        let select = createHTMLSelectElement(func);
-        select.className = 'form-control form-control-sm mb-2';
-
-        getBorderOptions().forEach((option) => select.appendChild(option));
-
-        func.addFormElement(select);
-        return func.getDiv();
-    }
-
-    function createHTMLSelectElement(func) {
-        let select = document.createElement('select'),
-            option = document.createElement('option');
-
-        option.innerText = 'Выберите стиль рамки';
-        option.disabled = true;
-        option.selected = true;
-        select.appendChild(option);
-
-        select.onchange = () => {
-            if (func.getInputValue() !== '') {
-                func.button.innerText = button.innerText = 'Применить' + ' ' + func.getInputValue() + ' px ' +
-                    'и рамка ' + select.value;
-            } else {
-                func.button.innerText = 'Применить' + ' ' + 'рамка ' + select.value;
-            }
-        };
-        return select;
-    }
-
-    function getBorderOptions() {
-        let borderOptions = [];
-        ['dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset'].forEach(
-            (borderStyle) => {
-                let option = document.createElement('option');
-                option.innerText = borderStyle;
-                borderOptions.push(option);
-            }
-        );
-        return borderOptions;
-    }
-
-    // 6. добавить элемент “Добавить заголовок”.
-    function captionChanger() {
-        let func = new defaultFunction(
-            'Добавить заголовок',
-            'Добавить',
-        );
-
-        func.addOnButtonListener(() => {
-            let caption = document.createElement('caption');
-            caption.innerText = func.getInputValue();
-            document.querySelector('table').appendChild(caption);
-        });
-
-        return func.getDiv();
-    }
-
-    // 7. добавить элемент “Удалить строку”
-    function rowDeleter() {
-        let func = new defaultFunction(
-            'Удалить строку',
-            'Удалить',
-        );
-
-        func.addOnButtonListener(() => {
-            let tableRows = document.querySelectorAll('tr');
-            if (func.getInputValue() < 1 || func.getInputValue() > tableRows.length
-                || func.getInputValue().match(/([^0-9])/g)) {
-                alert('Некорректное число! Попробуйте еще раз.');
-            } else {
-                tableRows[func.getInputValue() - 1].remove();
-            }
-        });
-        return func.getDiv();
-    }
-
-    // 8. добавить элемент “Случайный выбор”
-    function divRandomContentCreator() {
-        let func = new defaultFunction(
-            'Случайный выбор',
-            'Magic',
-            false
-        );
-
-        func.addOnButtonListener(() => {
-            magic(chooseRandomTableDataCell());
-        });
-        return func.getDiv();
-    }
-
-    function magic(td) {
-        if (randomInteger(1, 15) === 7) {
-            td.appendChild(createTableCellContent(td));
-        } else {
-            chooseRandomBgColor(td);
-            chooseRandomFontStyle(td);
-        }
-    }
-
-    function chooseRandomTableDataCell() {
-        let tableRowList = document.querySelectorAll('tr');
-        let tableRowIndex = randomInteger(0, tableRowList.length - 1);
-        let tableDataCellIndex = randomInteger(0, tableRowList[tableRowIndex].cells.length - 1);
-        return tableRowList[tableRowIndex].cells[tableDataCellIndex];
-    }
-
-    function setRandomColor() {
-        let hexTable = "0123456789ABCDEF";
-        let newColor = '#';
-        for (let i = 0; i < 6; i++) {
-            newColor += hexTable[randomInteger(0, hexTable.length - 1)];
-        }
-        console.log(newColor);
-        return newColor;
-    }
-
-    function chooseRandomBgColor(td) {
-        td.style.backgroundColor = setRandomColor();
-    }
-
-    function chooseRandomFontStyle(td) {
-        let newColor = setRandomColor();
-        let newFontSize = randomInteger(15, 25) + 'pt';
-        td.style.color = newColor;
-        td.style.fontSize = newFontSize;
-        /* если форма есть, то для каждого её внутреннего
-        тега задаем стиль
-        */
-        if (typeof td.childNodes[0] !== 'undefined') {
-            td.childNodes[0].childNodes.forEach((elem) => {
-                elem.style.color = newColor;
-                elem.style.fontSize = newFontSize;
-            });
-        }
-    }
-
-    function randomInteger(min, max) {
-        // случайное число от min до (max+1)
-        let rand = min + Math.random() * (max + 1 - min);
-        return Math.floor(rand);
-    }
-
-    // 9. добавить элемент “Удалить”
-    function tableDeleter() {
-        let func = new defaultFunction(
-            'Удалить',
-            'Удалить таблицу',
-            false
-        );
-
-        func.addOnButtonListener(() => {
-            form.style.display = 'block';
-            document.querySelector('table').remove();
-            document.querySelector('div.function_container').remove();
-        });
-        return func.getDiv();
-    }
-</script>
-
+<script src="js/table.js"></script>
+<script src="js/table_through_HTML.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
