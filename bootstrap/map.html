@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
 
 <head>
     <meta charset="UTF-8">
@@ -8,16 +8,59 @@
     <title>Карты</title>
     <link rel="alternate" type="application/rss+xml"
           title="Статьи с сайта htmlbook.ru" href="http://htmlbook.ru/rss.xml">
-    <link rel="shortcut icon" href="https://itmo.ru/pic/favicon.ico">
+    <link rel="icon" href="favicon.png">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
-<body>
+<body class="d-flex flex-column h-100">
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="index.html">
+            <img src="icons/brand.svg" width="35" height="35" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="table.html">Table</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Additional info
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="tasks.html">Tasks</a>
+                        <a class="dropdown-item" href="map.html">Map</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
 
+<main role="main" class="flex-shrink-0">
 
+</main>
+
+<footer class="mt-auto" style="min-height: 70px">
+    <div class="container-fluid text-center d-flex align-items-center justify-content-center bg-dark h-100">
+        <span class="text-white">
+            <a href="https://itmo.com/" class="text-white">ITMO University</a>, 2020
+            <br> by <a href="contact.html" class="text-white">Guryev Nikita</a>, N3456.
+        </span>
+    </div>
+</footer>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

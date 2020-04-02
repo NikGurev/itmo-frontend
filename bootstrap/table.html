@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  class="h-100">
 
 <head>
     <meta charset="UTF-8">
@@ -19,10 +19,11 @@
             crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body class="d-flex flex-column h-100">
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -41,72 +42,124 @@
     </div>
 </div>
 
-<div class="card-group">
-    <div class="card text-white bg-dark">
-        <div class="card-header">Изменить границы таблицы</div>
-        <div class="card-body">
-            <div class="form-group">
-            <form>
-                <select class="form-control form-control-sm mb-2"
-                        id="select"
-                        onchange="onSelectChanged(this)">
-                    <option disabled selected>
-                        Выберите стиль рамки
-                    </option>
-                </select>
-                <input class="form-control form-control-sm mb-2" type="text" oninput="onInputChanged(this)">
-                <button type="button" class="btn btn-light btn-sm" onclick="changeBorders()">Применить</button>
-            </form>
-            </div>
+<header class="masthead">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="index.html">
+            <img src="icons/brand.svg" width="35" height="35" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link active" href="table.html">Table</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Additional info
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="tasks.html">Tasks</a>
+                        <a class="dropdown-item" href="map.html">Map</a>
+                    </div>
+                </li>
+            </ul>
         </div>
-    </div>
-    <div class="card text-white bg-dark">
-        <div class="card-header">Добавить заголовок</div>
-        <div class="card-body">
-            <div class="form-group">
-                <form>
-                    <input class="form-control form-control-sm mb-2" type="text" id="add">
-                    <button type="button" class="btn btn-light btn-sm" onclick="changeCaption(this)">Добавить</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="card text-white bg-dark">
-        <div class="card-header">Удалить строку</div>
-        <div class="card-body">
-            <div class="form-group">
-                <form>
-                    <input class="form-control form-control-sm mb-2" type="text" id="delete">
-                    <button type="button" class="btn btn-light btn-sm" onclick="deleteRow(this)">Удалить</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="card text-white bg-dark">
-        <div class="card-header">Случайный выбор</div>
-        <div class="card-body">
-            <div class="form-group">
-                <form>
-                    <button type="button" class="btn btn-light btn-sm"
-                            onclick="magic()">Magic</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="card text-white bg-dark">
-        <div class="card-header">Удалить</div>
-        <div class="card-body">
-            <div class="form-group">
-                <form>
-                    <button type="button" class="btn btn-light btn-sm" id="clean" onclick="cleanTable()">Очистить таблицу</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+    </nav>
+</header>
 
 
-<script src="js/table.js"></script>
+<main>
+    <div class="card-group">
+        <div class="card bg-light">
+            <div class="card-header">Изменить границы таблицы</div>
+            <div class="card-body">
+                <div class="form-group">
+                    <form>
+                        <select class="form-control form-control-sm mb-2"
+                                id="select"
+                                onchange="onSelectChanged(this)">
+                            <option disabled selected>
+                                Выберите стиль рамки
+                            </option>
+                        </select>
+                        <input class="form-control form-control-sm mb-2" type="text" oninput="onInputChanged(this)">
+                        <button type="button" class="btn btn-dark btn-sm" onclick="changeBorders()">Применить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card bg-light">
+            <div class="card-header">Добавить заголовок</div>
+            <div class="card-body">
+                <div class="form-group">
+                    <form>
+                        <input class="form-control form-control-sm mb-2" type="text" id="add">
+                        <button type="button" class="btn btn-dark btn-sm" onclick="changeCaption(this)">Добавить
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card bg-light">
+            <div class="card-header">Удалить строку</div>
+            <div class="card-body">
+                <div class="form-group">
+                    <form>
+                        <input class="form-control form-control-sm mb-2" type="text" id="delete">
+                        <button type="button" class="btn btn-dark btn-sm" onclick="deleteRow(this)">Удалить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card bg-light">
+            <div class="card-header">Случайный выбор</div>
+            <div class="card-body">
+                <div class="form-group">
+                    <form>
+                        <button type="button" class="btn btn-dark btn-sm"
+                                onclick="magic()">Magic
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card bg-light">
+            <div class="card-header">Удалить</div>
+            <div class="card-body">
+                <div class="form-group">
+                    <form>
+                        <button type="button" class="btn btn-dark btn-sm" id="clean" onclick="cleanTable()">Очистить
+                            таблицу
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<footer class="mt-auto" style="min-height: 70px">
+    <div class="container-fluid text-center d-flex align-items-center justify-content-center bg-dark h-100">
+        <span class="text-white">
+            <a href="https://itmo.com/" class="text-white">ITMO University</a>, 2020
+            <br> by <a href="contact.html" class="text-white">Guryev Nikita</a>, N3456.
+        </span>
+    </div>
+</footer>
+
+<script src="js/table.js" onload="console.log('success')"></script>
 <script src="js/table_through_HTML.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
