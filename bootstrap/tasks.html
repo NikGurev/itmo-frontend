@@ -12,6 +12,11 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        .card {
+            max-width: 300px;
+        }
+    </style>
 </head>
 
 <body class="d-flex flex-column h-100 position-relative" style="position: relative;">
@@ -56,7 +61,7 @@
     <div class="container-fluid mt-2 mb-2" style="position: relative;">
         <div class="row">
             <div class="col-5">
-                <div id="list-example" class="list-group">
+                <div id="list-example" class="list-group shadow-sm">
                     <a class="list-group-item list-group-item-action active" href="#list-item-1" data-toggle="list"
                        role="tab" aria-controls="list-item-1">Задание 1</a>
                     <a class="list-group-item list-group-item-action" href="#list-item-2" data-toggle="list" role="tab"
@@ -75,53 +80,66 @@
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="list-item-1" role="tabpanel"
                          aria-labelledby="list-home-list">
-                        <p>Сверстать страницу из блоков по макету. <br/>
-                            <a href="https://github.com/kikichik/itmo/tree/master/%D0%B4%D0%B7%20CSS">
-                                Ссылка на задание.</a>
-                        </p>
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <p class="card-text">Сверстать страницу из блоков по макету.</p>
+                                <a href="https://github.com/kikichik/itmo/tree/master/%D0%B4%D0%B7%20CSS"
+                                   class="btn btn-primary">Ссылка на задание</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="list-item-2" role="tabpanel" aria-labelledby="list-profile-list">
-                        <p>Задать CSS-селекторы к уже имеющемуся HTML-файлу.
-                            <br/>
-                            <a href="https://github.com/kikichik/itmo/tree/master/%D0%B2%D0%B5%D1%80%D1%81%D1%82%D0%BA%D0%B0">
-                                Ссылка на задание.</a>
-                        </p>
-
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <p class="card-text">Задать CSS-селекторы к уже имеющемуся HTML-файлу.</p>
+                                <a href="https://github.com/kikichik/itmo/tree/master/%D0%B2%D0%B5%D1%80%D1%81%D1%82%D0%BA%D0%B0"
+                                   class="btn btn-primary">Ссылка на задание</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="list-item-3" role="tabpanel" aria-labelledby="list-messages-list">
-                        <p> Практика JavaScript: работа с DOM, изучение синтаксиса.
-                            <br/>
-                            <a href="https://github.com/kikichik/itmo/tree/master/%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%BF%D0%BE%20js/1%20task">
-                                Ссылка на задание.</a>
-                        </p>
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <p class="card-text">Практика JavaScript: работа с DOM, изучение синтаксиса.</p>
+                                <a href="https://github.com/kikichik/itmo/tree/master/%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%BF%D0%BE%20js/1%20task"
+                                   class="btn btn-primary">Ссылка на задание</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="list-item-4" role="tabpanel" aria-labelledby="list-settings-list">
-                        <p>Практика JavaScript: создание формы, параметры которой задают количество строк и столбцов
-                            таблицы.
-                            Работа с таблицей через панель функций.
-                            <br/>
-                            <a href="https://github.com/kikichik/itmo/tree/master/%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%BF%D0%BE%20js/2%20task">
-                                Ссылка на задание.</a>
-                        </p>
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    Практика JavaScript: создание формы, параметры которой задают количество строк и столбцов
+                                    таблицы. Работа с таблицей через панель функций.
+                                </p>
+                                <a href="https://github.com/kikichik/itmo/tree/master/%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%BF%D0%BE%20js/2%20task"
+                                   class="btn btn-primary">Ссылка на задание</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="list-item-5" role="tabpanel" aria-labelledby="list-settings-list">
-
-                        <p> Работа с библиотекой jQuery: создание и изменение DOM-элементов. Получение контента через запрос и
-                            его
-                            отрисовка на странице. Получение и обработка JSON-документа и представление его в форме
-                            ненумерованного списка.
-                            <br/>
-                            <a href="https://github.com/kikichik/itmo/tree/master/jquery">
-                                Ссылка на задание.</a>
-                        </p>
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    Работа с библиотекой jQuery: создание и изменение DOM-элементов. Получение контента через запрос и
+                                    его отрисовка на странице. Получение и обработка JSON-документа и представление его в форме
+                                    ненумерованного списка.</p>
+                                <a href="https://github.com/kikichik/itmo/tree/master/jquery"
+                                   class="btn btn-primary">Ссылка на задание</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="list-item-6" role="tabpanel" aria-labelledby="list-messages-list">
-                        <p>Изучение Bootstrap: создание и оформление нескольких страниц. Доработка 2 задания по
-                            JavaScript.
-                            <br/>
-                            <a href="https://github.com/kikichik/itmo/tree/master/jquery">
-                                Ссылка на задание.</a>
-                        </p>
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    Изучение Bootstrap: создание и оформление нескольких страниц. Доработка 2 задания по
+                                    JavaScript.</p>
+                                <a href="https://github.com/kikichik/itmo/tree/master/jquery"
+                                   class="btn btn-primary">Ссылка на задание</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
