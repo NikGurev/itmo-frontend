@@ -14,13 +14,14 @@
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column h-100 position-relative" style="position: relative;">
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="index.html">
             <img src="icons/brand.svg" width="30" height="30" alt="">
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -52,6 +53,80 @@
 
 <main role="main" class="flex-shrink-0">
 
+    <div class="container-fluid mt-2 mb-2" style="position: relative;">
+        <div class="row">
+            <div class="col-5">
+                <div id="list-example" class="list-group">
+                    <a class="list-group-item list-group-item-action active" href="#list-item-1" data-toggle="list"
+                       role="tab" aria-controls="list-item-1">Задание 1</a>
+                    <a class="list-group-item list-group-item-action" href="#list-item-2" data-toggle="list" role="tab"
+                       aria-controls="list-item-2">Задание 2</a>
+                    <a class="list-group-item list-group-item-action" href="#list-item-3" data-toggle="list" role="tab"
+                       aria-controls="list-item-3">Задание 3</a>
+                    <a class="list-group-item list-group-item-action" href="#list-item-4" data-toggle="list" role="tab"
+                       aria-controls="list-item-4">Задание 4</a>
+                    <a class="list-group-item list-group-item-action" href="#list-item-5" data-toggle="list" role="tab"
+                       aria-controls="list-item-5">Задание 5</a>
+                    <a class="list-group-item list-group-item-action" href="#list-item-6" data-toggle="list" role="tab"
+                       aria-controls="list-item-6">Задание 6</a>
+                </div>
+            </div>
+            <div class="col-7">
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="list-item-1" role="tabpanel"
+                         aria-labelledby="list-home-list">
+                        <p>Сверстать страницу из блоков по макету. <br/>
+                            <a href="https://github.com/kikichik/itmo/tree/master/%D0%B4%D0%B7%20CSS">
+                                Ссылка на задание.</a>
+                        </p>
+                    </div>
+                    <div class="tab-pane fade" id="list-item-2" role="tabpanel" aria-labelledby="list-profile-list">
+                        <p>Задать CSS-селекторы к уже имеющемуся HTML-файлу.
+                            <br/>
+                            <a href="https://github.com/kikichik/itmo/tree/master/%D0%B2%D0%B5%D1%80%D1%81%D1%82%D0%BA%D0%B0">
+                                Ссылка на задание.</a>
+                        </p>
+
+                    </div>
+                    <div class="tab-pane fade" id="list-item-3" role="tabpanel" aria-labelledby="list-messages-list">
+                        <p> Практика JavaScript: работа с DOM, изучение синтаксиса.
+                            <br/>
+                            <a href="https://github.com/kikichik/itmo/tree/master/%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%BF%D0%BE%20js/1%20task">
+                                Ссылка на задание.</a>
+                        </p>
+                    </div>
+                    <div class="tab-pane fade" id="list-item-4" role="tabpanel" aria-labelledby="list-settings-list">
+                        <p>Практика JavaScript: создание формы, параметры которой задают количество строк и столбцов
+                            таблицы.
+                            Работа с таблицей через панель функций.
+                            <br/>
+                            <a href="https://github.com/kikichik/itmo/tree/master/%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%BF%D0%BE%20js/2%20task">
+                                Ссылка на задание.</a>
+                        </p>
+                    </div>
+                    <div class="tab-pane fade" id="list-item-5" role="tabpanel" aria-labelledby="list-settings-list">
+
+                        <p> Работа с библиотекой jQuery: создание и изменение DOM-элементов. Получение контента через запрос и
+                            его
+                            отрисовка на странице. Получение и обработка JSON-документа и представление его в форме
+                            ненумерованного списка.
+                            <br/>
+                            <a href="https://github.com/kikichik/itmo/tree/master/jquery">
+                                Ссылка на задание.</a>
+                        </p>
+                    </div>
+                    <div class="tab-pane fade" id="list-item-6" role="tabpanel" aria-labelledby="list-messages-list">
+                        <p>Изучение Bootstrap: создание и оформление нескольких страниц. Доработка 2 задания по
+                            JavaScript.
+                            <br/>
+                            <a href="https://github.com/kikichik/itmo/tree/master/jquery">
+                                Ссылка на задание.</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 
 <footer class="mt-auto" style="min-height: 70px">
@@ -62,6 +137,10 @@
         </span>
     </div>
 </footer>
+
+<script>
+    $('body').scrollspy({ target: '#list-example' });
+</script>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
