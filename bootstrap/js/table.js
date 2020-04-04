@@ -47,12 +47,7 @@ function createTable(cols, rows) {
                 let td = document.createElement('td');
                 td.style = 'position: relative; height: 45px';
                 if (j !== 0) {
-                    td.onmouseenter = () => {
-                        td.append(createAddButton(false));
-                    };
-                    td.onmouseleave = () => {
-                        td.getElementsByTagName('div')[0].remove();
-                    };
+                    addMouseEventsOnTableCell(td, false);
                 }
                 td.innerHTML += (j === 0) ? ' ' : getLetterById(j - 1);
                 tr.append(td);
@@ -72,14 +67,9 @@ function createTable(cols, rows) {
 function createTableCell(rowIndex, columnIndex) {
     let td = document.createElement('td');
     if (columnIndex === 0) {
-        td.onmouseenter = () => {
-            td.append(createAddButton());
-        };
-        td.onmouseleave = () => {
-            td.getElementsByTagName('div')[0].remove();
-        };
+        addMouseEventsOnTableCell(td);
         td.style = 'position: relative; width: 45px';
-        td.innerHTML += getNumberById(rowIndex-1);
+        td.innerHTML += rowIndex;
         td.className = 'table-secondary text-center';
         td.style.paddingLeft = td.style.paddingRight = '0';
 
@@ -109,18 +99,22 @@ function createAddButtonUp() {
 
 function createRow(container) {
     let currentTr = container.parentNode.parentNode;
-    let tdText = container.parentNode.textContent;
-    let currentRowNumber = tdText.slice(0, tdText.indexOf('a'));
-    let currentColsQuantity = currentTr.childNodes.length;
     let table = currentTr.parentNode;
-
+    let currentColsQuantity = currentTr.childNodes.length;
+    let currentRowIndex = Array.from(table.querySelectorAll('tr')).indexOf(currentTr);
+    let currentRowsQuantity = table.querySelectorAll('tr').length;
     let tr = document.createElement('tr');
     for (let j = 0; j < +currentColsQuantity; j++) {
-        let td = createTableCell(currentRowNumber, j);
+        let td = createTableCell(currentRowIndex, j);
         tr.append(td);
     }
     currentTr.before(tr);
-    console.log(currentRowNumber);
+    for (let j = currentRowIndex + 1 ; j < currentRowsQuantity + 1; j++) {
+        let numberCell = table.children[j + 1].children[0];
+        numberCell.innerHTML = j;
+    }
+
+    console.log(currentRowIndex);
 }
 
 function createAddButtonLeft() {
@@ -146,25 +140,36 @@ function createColumn(container) {
     let currentRowsQuantity = table.querySelectorAll('tr').length;
     // получаем index столбца, перед которым мы дложны добавить новый
     for (let i = 0; i < currentRowsQuantity; i++) {
-        let tr = table.children[i + 1]  ;
-        // добавление системных клеток в 1 строчку
+        let tr = table.children[i + 1];
+        // добавление системных клеток в первую строчку
         if (i === 0) {
-                let td = document.createElement('td');
-                td.style = 'position: relative; height: 45px';
-                    td.onmouseenter = () => {
-                        td.append(createAddButton(false));
-                    };
-                    td.onmouseleave = () => {
-                        td.getElementsByTagName('div')[0].remove();
-                    };
-                td.innerHTML += getLetterById(currentColIndex - 1);
-                currentTd.before(td);
+            let td = document.createElement('td');
+            td.style = 'position: relative; height: 45px';
+            addMouseEventsOnTableCell(td, false);
+            td.innerHTML += getLetterById(currentColIndex - 1);
+            currentTd.before(td);
+            /*замена букв в первой строке:
+            * начинаем с клетки после текущего, так как уже вставили элемент
+            * пробегаемся по всем клеткам до конца и меняем букву на следующую по алфавиту */
+            for (let j = currentColIndex + 1; j < currentColsQuantity + 1 ; j++) {
+                let letterTd = currentTr.children[j];
+                letterTd.innerHTML = getLetterById(j - 1);
+            }
             // добавление клеток с данными клеток
         } else {
-                let td = createTableCell(i, currentColIndex);
-                tr.children[currentColIndex].before(td);
+            let td = createTableCell(i, currentColIndex);
+            tr.children[currentColIndex].before(td);
         }
     }
+}
+
+function addMouseEventsOnTableCell(td, flagColsRows = true) {
+    td.onmouseenter = () => {
+        td.append(createAddButton(flagColsRows));
+    };
+    td.onmouseleave = () => {
+        td.getElementsByTagName('div')[0].remove();
+    };
 }
 
 // 3
@@ -217,11 +222,6 @@ function getLetterById(id) {
         'W', 'X', 'Y', 'Z'][id];
 
 }
-
-function getNumberById(id) {
-    return [1, 2, 3, 4, 5, 6, 7, 8, 9, 0][id];
-}
-
 
 function changeBorders() {
     let selectElement = document.getElementById('select');
