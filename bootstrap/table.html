@@ -81,89 +81,97 @@
 
 <main>
     <div class="container-fluid p-0 d-flex flex-column">
-    <div class="card-group">
-        <div class="card bg-light">
-            <div class="card-header text-center">Изменить границы таблицы</div>
-            <div class="card-body">
-                <div class="form-group">
-                    <form>
-                        <select class="form-control form-control-sm mb-2"
-                                id="select"
-                                onchange="onSelectChanged(this)">
-                            <option disabled selected>
-                                Выберите стиль рамки
-                            </option>
-                        </select>
-                        <input class="form-control form-control-sm mb-2" type="text" oninput="onInputChanged(this)">
-                        <button type="button" class="btn btn-dark btn-sm" onclick="changeBorders()">Применить</button>
-                    </form>
+        <div class="card-group">
+            <div class="card bg-light">
+                <div class="card-header text-center">Изменить границы таблицы</div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <form>
+                            <select class="form-control form-control-sm mb-2"
+                                    id="select"
+                                    onchange="onSelectChanged(this)">
+                                <option disabled selected>
+                                    Выберите стиль рамки
+                                </option>
+                            </select>
+                            <input class="form-control form-control-sm mb-2" type="text" oninput="onInputChanged(this)">
+                            <button type="button" class="btn btn-dark btn-sm" onclick="changeBorders()">Применить
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-light">
+                <div class="card-header text-center">Добавить заголовок</div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <form>
+                            <input class="form-control form-control-sm mb-2" type="text" id="add">
+                            <button type="button" class="btn btn-dark btn-sm" onclick="changeCaption()">Добавить
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-light">
+                <div class="card-header text-center">Удалить элемент</div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <form>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+                                <label class="custom-control-label" for="customRadio1"> Строка</label>
+                            </div>
+                            <div class="custom-control custom-radio mb-2">
+                                <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+                                <label class="custom-control-label" for="customRadio2"> Столбец</label>
+                            </div>
+                            <input class="form-control form-control-sm mb-2" type="text" id="delete">
+                            <button type="button" class="btn btn-dark btn-sm" onclick="deleteElement(this)">Удалить
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-light">
+                <div class="card-header text-center">Случайный выбор</div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <form>
+                            <button type="button" class="btn btn-dark btn-sm"
+                                    onclick="magic()">Magic
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-light">
+                <div class="card-header text-center">Удалить</div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <form>
+                            <button type="button" class="btn btn-dark btn-sm" id="clean" onclick="cleanTable()">Очистить
+                                таблицу
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="card bg-light">
-            <div class="card-header text-center">Добавить заголовок</div>
-            <div class="card-body">
-                <div class="form-group">
-                    <form>
-                        <input class="form-control form-control-sm mb-2" type="text" id="add">
-                        <button type="button" class="btn btn-dark btn-sm" onclick="changeCaption()">Добавить
+        <div class="container-fluid mt-3 mt-md-5 d-none" id="alertWrapper">
+            <div class="row justify-content-end">
+                <div class="col-md-4">
+                    <div class="alert alert-warning alert-dismissible fade" id="alert" role="alert">
+                        <strong>Holy guacamole!</strong> Данные не получены или некорректны. Попробуйте зайти на главную
+                        страницу и повторить еще раз.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
                         </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="card bg-light">
-            <div class="card-header text-center">Удалить элемент</div>
-            <div class="card-body">
-                <div class="form-group">
-                    <form>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-                            <label class="custom-control-label" for="customRadio1"> Строка</label>
-                        </div>
-                        <div class="custom-control custom-radio mb-2">
-                            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-                            <label class="custom-control-label" for="customRadio2"> Столбец</label>
-                        </div>
-                        <input class="form-control form-control-sm mb-2" type="text" id="delete">
-                        <button type="button" class="btn btn-dark btn-sm" onclick="deleteElement(this)">Удалить</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="card bg-light">
-            <div class="card-header text-center">Случайный выбор</div>
-            <div class="card-body">
-                <div class="form-group">
-                    <form>
-                        <button type="button" class="btn btn-dark btn-sm"
-                                onclick="magic()">Magic
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="card bg-light">
-            <div class="card-header text-center">Удалить</div>
-            <div class="card-body">
-                <div class="form-group">
-                    <form>
-                        <button type="button" class="btn btn-dark btn-sm" id="clean" onclick="cleanTable()">Очистить
-                            таблицу
-                        </button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-                <div class="alert alert-warning alert-dismissible fade" id="alert" role="alert">
-                    <strong>Holy guacamole!</strong> Данные не получены или некорректны. Попробуйте зайти на главную страницу и повторить еще раз.
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-</div>
 </main>
 
 
