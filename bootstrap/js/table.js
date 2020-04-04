@@ -42,7 +42,7 @@ function createTable(cols, rows) {
     for (let i = 0; i < +rows + 1; i++) {
         let tr = document.createElement('tr');
         if (i === 0) {
-            tr.className = 'table-secondary';
+            tr.className = 'table-secondary text-center';
             for (let j = 0; j < +cols + 1; j++) {
                 let td = document.createElement('td');
                 td.style = 'position: relative; height: 45px';
@@ -99,14 +99,28 @@ function createAddButtonUp() {
     badge.innerHTML = '<span class="material-icons" style="font-size: 10px">' +
         'add' +
         '</span>';
-    badge.style = 'position: absolute;top: -15 px;right: 0;left: 0; cursor: pointer'
+    badge.style = 'position: absolute;top: -10px;right: 0;left: 0; cursor: pointer'
     let addContainer = document.createElement('div');
     addContainer.style ='position: absolute; top: 0; width: 45px; height: 3px'
     addContainer.append(badge);
-    addContainer.onclick = () => {
-        console.log('row created');
-    }
+    addContainer.onclick = () => createRow(addContainer);
     return addContainer;
+}
+
+function createRow(container) {
+    let currentTr = container.parentNode.parentNode;
+    let tdText = container.parentNode.textContent;
+    let currentRowNumber = tdText.slice(0, tdText.indexOf('a'));
+    let currentColsQuantity = currentTr.childNodes.length;
+    let table = currentTr.parentNode;
+
+    let tr = document.createElement('tr');
+    for (let j = 0; j < +currentColsQuantity; j++) {
+        let td = createTableCell(currentRowNumber, j);
+        tr.append(td);
+    }
+    currentTr.before(tr);
+    console.log(currentRowNumber);
 }
 
 function createAddButtonLeft() {
@@ -119,10 +133,38 @@ function createAddButtonLeft() {
     let addContainer = document.createElement('div');
     addContainer.style ='position: absolute; top: 0; height: 45px; width: 3px'
     addContainer.append(badge);
-    addContainer.onclick = () => {
-        console.log('column created');
-    }
+    addContainer.onclick = () => createColumn(addContainer);
     return addContainer;
+}
+
+function createColumn(container) {
+    let currentTd = container.parentNode;
+    let currentTr = currentTd.parentNode;
+    let table = currentTr.parentNode;
+    let currentColIndex = Array.from(currentTr.children).indexOf(currentTd);
+    let currentColsQuantity = currentTr.childNodes.length;
+    let currentRowsQuantity = table.querySelectorAll('tr').length;
+    // получаем index столбца, перед которым мы дложны добавить новый
+    for (let i = 0; i < currentRowsQuantity; i++) {
+        let tr = table.children[i + 1]  ;
+        // добавление системных клеток в 1 строчку
+        if (i === 0) {
+                let td = document.createElement('td');
+                td.style = 'position: relative; height: 45px';
+                    td.onmouseenter = () => {
+                        td.append(createAddButton(false));
+                    };
+                    td.onmouseleave = () => {
+                        td.getElementsByTagName('div')[0].remove();
+                    };
+                td.innerHTML += getLetterById(currentColIndex - 1);
+                currentTd.before(td);
+            // добавление клеток с данными клеток
+        } else {
+                let td = createTableCell(i, currentColIndex);
+                tr.children[currentColIndex].before(td);
+        }
+    }
 }
 
 // 3
