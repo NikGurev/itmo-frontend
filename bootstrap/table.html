@@ -22,7 +22,7 @@
 <body class="d-flex flex-column h-100">
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -33,7 +33,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                Данные не получены или некорректны. Попробуйте зайти на главную страницу и повторить еще раз.
+                Данные не получены или некорректны. Попробуйте вернуться и повторить еще раз.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Закрыть</button>
@@ -80,9 +80,10 @@
 
 
 <main>
+    <div class="container-fluid p-0 d-flex flex-column">
     <div class="card-group">
         <div class="card bg-light">
-            <div class="card-header">Изменить границы таблицы</div>
+            <div class="card-header text-center">Изменить границы таблицы</div>
             <div class="card-body">
                 <div class="form-group">
                     <form>
@@ -100,30 +101,38 @@
             </div>
         </div>
         <div class="card bg-light">
-            <div class="card-header">Добавить заголовок</div>
+            <div class="card-header text-center">Добавить заголовок</div>
             <div class="card-body">
                 <div class="form-group">
                     <form>
                         <input class="form-control form-control-sm mb-2" type="text" id="add">
-                        <button type="button" class="btn btn-dark btn-sm" onclick="changeCaption(this)">Добавить
+                        <button type="button" class="btn btn-dark btn-sm" onclick="changeCaption()">Добавить
                         </button>
                     </form>
                 </div>
             </div>
         </div>
         <div class="card bg-light">
-            <div class="card-header">Удалить строку</div>
+            <div class="card-header text-center">Удалить элемент</div>
             <div class="card-body">
                 <div class="form-group">
                     <form>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+                            <label class="custom-control-label" for="customRadio1"> Строка</label>
+                        </div>
+                        <div class="custom-control custom-radio mb-2">
+                            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+                            <label class="custom-control-label" for="customRadio2"> Столбец</label>
+                        </div>
                         <input class="form-control form-control-sm mb-2" type="text" id="delete">
-                        <button type="button" class="btn btn-dark btn-sm" onclick="deleteRow(this)">Удалить</button>
+                        <button type="button" class="btn btn-dark btn-sm" onclick="deleteElement(this)">Удалить</button>
                     </form>
                 </div>
             </div>
         </div>
         <div class="card bg-light">
-            <div class="card-header">Случайный выбор</div>
+            <div class="card-header text-center">Случайный выбор</div>
             <div class="card-body">
                 <div class="form-group">
                     <form>
@@ -135,7 +144,7 @@
             </div>
         </div>
         <div class="card bg-light">
-            <div class="card-header">Удалить</div>
+            <div class="card-header text-center">Удалить</div>
             <div class="card-body">
                 <div class="form-group">
                     <form>
@@ -147,6 +156,14 @@
             </div>
         </div>
     </div>
+
+                <div class="alert alert-warning alert-dismissible fade" id="alert" role="alert">
+                    <strong>Holy guacamole!</strong> Данные не получены или некорректны. Попробуйте зайти на главную страницу и повторить еще раз.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+</div>
 </main>
 
 
