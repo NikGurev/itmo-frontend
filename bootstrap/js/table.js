@@ -32,9 +32,11 @@ function isParamsCorrect(queryParams) {
 
 function createTable(cols, rows) {
     let div = document.createElement('div'),
+        divWrapper = document.createElement('div'),
         caption = document.createElement('caption'),
     table = document.createElement('table');
     table.className = 'table-bordered table-sm';
+    divWrapper.className = 'col-sm-12 order-sm-12 order-sm-1';
     div.className = 'table-responsive';
     caption.innerText = 'Без названия';
     table.appendChild(caption);
@@ -61,7 +63,8 @@ function createTable(cols, rows) {
         table.append(tr);
     }
     div.append(table);
-    document.querySelector('main').appendChild(div);
+    divWrapper.append(div);
+    document.getElementById('wrapper').appendChild(divWrapper);
 }
 
 function createTableCell(rowIndex, columnIndex) {
