@@ -59,9 +59,10 @@
     <div id="map"></div>
     <script>
         var map;
-        // на карте должен появиться город Гурьевск
+        // Initialize and add the map
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
+                // на карте должен появиться город Гурьевск
                 center: {lat: 54.7805955, lng: 20.580},
                 zoom: 13
             });
