@@ -44,7 +44,16 @@ function createTable(cols, rows) {
             tr.className = 'table-secondary';
             for (let j = 0; j < +cols + 1; j++) {
                 let td = document.createElement('td');
-                td.innerText = (j === 0) ? ' ' : getLetterById(j-1);
+                td.style = 'position: relative; height: 45px';
+                if (j !== 0) {
+                    td.onmouseenter = () => {
+                        td.append(createAddButton(false));
+                    };
+                    td.onmouseleave = () => {
+                        td.getElementsByTagName('div')[0].remove();
+                    };
+                }
+                td.innerHTML += (j === 0) ? ' ' : getLetterById(j - 1);
                 tr.append(td);
             }
         } else {
@@ -61,16 +70,58 @@ function createTable(cols, rows) {
 
 function createTableCell(rowIndex, columnIndex) {
     let td = document.createElement('td');
-    // td.onmousemove = () => td.style.backgroundColor = '#cecece';
-    // td.onmouseout = () => td.style.backgroundColor = 'white';
     if (columnIndex === 0) {
-        td.innerText = getNumberById(rowIndex-1);
-        td.className = 'table-secondary';
-        td.style.padding = '.3rem 1rem .3rem 1rem';
+        td.onmouseenter = () => {
+            td.append(createAddButton());
+        };
+        td.onmouseleave = () => {
+            td.getElementsByTagName('div')[0].remove();
+        };
+        td.style = 'position: relative; width: 45px';
+        td.innerHTML += getNumberById(rowIndex-1);
+        td.className = 'table-secondary text-center';
+        td.style.paddingLeft = td.style.paddingRight = '0';
+
     } else {
         td.append(createTableCellContent(td));
     }
     return td;
+}
+
+function createAddButton(rows = true) {
+   return (rows) ? createAddButtonUp() : createAddButtonLeft();
+}
+
+function createAddButtonUp() {
+    let badge = document.createElement('span');
+    badge.className = 'badge badge-primary';
+    badge.innerHTML = '<span class="material-icons" style="font-size: 10px">' +
+        'add' +
+        '</span>';
+    badge.style = 'position: absolute;top: -15 px;right: 0;left: 0; cursor: pointer'
+    let addContainer = document.createElement('div');
+    addContainer.style ='position: absolute; top: 0; width: 45px; height: 3px'
+    addContainer.append(badge);
+    addContainer.onclick = () => {
+        console.log('row created');
+    }
+    return addContainer;
+}
+
+function createAddButtonLeft() {
+    let badge = document.createElement('span');
+    badge.className = 'badge badge-primary text-center';
+    badge.innerHTML = '<span class="material-icons" style="font-size: 10px">' +
+        'add' +
+        '</span>';
+    badge.style = 'position: absolute;left: -20px; top: 0; bottom: 0; cursor: pointer; display: flex; align-items: center;'
+    let addContainer = document.createElement('div');
+    addContainer.style ='position: absolute; top: 0; height: 45px; width: 3px'
+    addContainer.append(badge);
+    addContainer.onclick = () => {
+        console.log('column created');
+    }
+    return addContainer;
 }
 
 // 3
@@ -79,8 +130,7 @@ function createTableCellContent(td, previousValue) {
     let form = document.createElement('form'),
         textarea = document.createElement('textarea'),
         button = document.createElement('button'),
-        divForm = document.createElement('div')
-    ;
+        divForm = document.createElement('div');
 
     divForm.className = 'form-group';
     button.innerHTML = '<span class="material-icons">' +
@@ -205,11 +255,17 @@ function changeCaption() {
 
 
 // 7. добавить элемент “Удалить строку”
+function deleteElement(button) {
+    /*custom-control-input[0] - rows
+    * custom-control-input[1] - columns*/
+    (button.parentNode.querySelectorAll('.custom-control-input')[0].checked)
+        ? deleteRow() : deleteColumn();
+}
+
 function deleteRow() {
     let inputElement = document.getElementById('delete');
     let tableRows = document.querySelectorAll('tr');
-    if (inputElement.value < 1 || inputElement.value > tableRows.length
-        || inputElement.value.match(/([^0-9])/g)) {
+    if (!isInputCorrect(inputElement, tableRows.length)) {
         alert('Некорректное число! Попробуйте еще раз.');
     } else {
         /*После того как удаляем столбец, он не исчезает,
@@ -224,21 +280,24 @@ function deleteRow() {
 
 // Добавление - функция удаления столбца
 /*нужно пробежаться по всем строкам и удалить клетки с позицией inputElement.value*/
-function deleteRow() {
-    let inputElement = document.getElementById('deleteCol');
+function deleteColumn() {
+    let inputElement = document.getElementById('delete');
     let tableRows = document.querySelectorAll('tr');
-    if (inputElement.value < 1 || inputElement.value > tableRows[0].cells.length
-        || inputElement.value.match(/([^0-9])/g)) {
+    if (!isInputCorrect(inputElement, tableRows[0].cells.length)) {
         alert('Некорректное число! Попробуйте еще раз.');
     } else {
         /*После того как удаляем строку, она не исчезает,
          поэтому нужно пробежать по всем строкам после удаленной
          и уменьшить позицию на один*/
-        tableRows[inputElement.value].remove();
-        for (let i = +inputElement.value; i < tableRows.length; i++) {
-            tableRows[i].cells[0].innerText -= 1;
+        for (let i = 0; i < tableRows.length; i++) {
+            tableRows[i].cells[inputElement.value].remove();
         }
     }
+}
+
+function isInputCorrect(inputElement, max) {
+    return !(inputElement.value < 1 || inputElement.value > max
+        || inputElement.value.match(/([^0-9])/g));
 }
 
 
@@ -303,12 +362,12 @@ function cleanTable() {
     for (let form of forms) {
         form.reset();
     }
-    //меняем текст на форму
+    // меняем текст на форму
     let tableRowList = document.querySelectorAll('tr');
     for (let i = 1; i < tableRowList.length; i++) {
         for (let j = 1; j < tableRowList[i].cells.length; j++) {
             let currentTableCell = tableRowList[i].cells[j];
-            if (currentTableCell.childNodes[0].nodeName !== 'form') {
+            if (currentTableCell.firstChild.nodeName !== 'form') {
                 currentTableCell.append(createTableCellContent(currentTableCell));
             }
         }
