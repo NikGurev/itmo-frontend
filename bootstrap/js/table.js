@@ -1,6 +1,7 @@
 
 $(window).on('load', function(){
     if (!isParamsCorrect(hrefQueryParams)) {
+        $('#alertWrapper').attr("class", "container-fluid mt-3 mt-md-5");
         $('#alert').attr("class", "alert alert-warning alert-dismissible fade show");
     } else {
         // createFunctionPanel();
@@ -266,7 +267,7 @@ function deleteRow() {
     let inputElement = document.getElementById('delete');
     let tableRows = document.querySelectorAll('tr');
     if (!isInputCorrect(inputElement, tableRows.length)) {
-        alert('Некорректное число! Попробуйте еще раз.');
+            $('#myModal').modal('show');
     } else {
         /*После того как удаляем столбец, он не исчезает,
          поэтому нужно пробежать по всем строкам после удаленной
@@ -284,7 +285,7 @@ function deleteColumn() {
     let inputElement = document.getElementById('delete');
     let tableRows = document.querySelectorAll('tr');
     if (!isInputCorrect(inputElement, tableRows[0].cells.length)) {
-        alert('Некорректное число! Попробуйте еще раз.');
+        $('#myModal').modal('show');
     } else {
         /*После того как удаляем строку, она не исчезает,
          поэтому нужно пробежать по всем строкам после удаленной
