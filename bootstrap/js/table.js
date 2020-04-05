@@ -71,7 +71,7 @@ function createTableCell(rowIndex, columnIndex) {
     let td = document.createElement('td');
     if (columnIndex === 0) {
         addMouseEventsOnTableCell(td);
-        td.style = 'position: relative; width: 45px';
+        td.style = 'position: relative; min-width: 45px';
         td.innerHTML += rowIndex;
         td.className = 'table-secondary text-center';
         td.style.paddingLeft = td.style.paddingRight = '0';
