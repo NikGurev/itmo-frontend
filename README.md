@@ -1,1 +1,2 @@
-# Информация по заданиям: https://kikichik.github.io/tasks.html
+# Информация по заданиям: 
+https://kikichik.github.io/tasks.html
