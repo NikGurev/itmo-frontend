@@ -1,1 +1,1 @@
-1 - Блоки, 2 - CSS, 3 - JS
+# Информация по заданиям: https://kikichik.github.io/tasks.html
