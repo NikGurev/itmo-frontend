@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en"  class="h-100">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Таблица</title>
+    <link rel="alternate" type="application/rss+xml"
+          title="Статьи с сайта htmlbook.ru" href="http://htmlbook.ru/rss.xml">
+    <link rel="icon" href="icons/favicon.png">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+</head>
+
+<body class="d-flex flex-column h-100">
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ошибка!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Данные не получены или некорректны. Попробуйте вернуться и повторить еще раз.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<header class="masthead">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="index.html">
+            <img src="icons/brand.svg" width="30" height="30" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link active" href="table.html">Table</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Info
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="tasks.html">Tasks</a>
+                        <a class="dropdown-item" href="map.html">Map</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+
+<main>
+    <div class="container-fluid p-0 d-flex flex-column">
+        <div class="row" id="wrapper" style="margin: 0">
+            <div class="col-12 order-12" style="padding: 0">
+                <div class="card-group">
+                    <div class="card bg-light">
+                        <div class="card-header text-center">Изменить границы таблицы</div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <form>
+                                    <select class="form-control form-control-sm mb-2"
+                                            id="select"
+                                            onchange="onSelectChanged(this)">
+                                        <option disabled selected>
+                                            Выберите стиль рамки
+                                        </option>
+                                    </select>
+                                    <input class="form-control form-control-sm mb-2" type="text" oninput="onInputChanged(this)">
+                                    <button type="button" class="btn btn-dark btn-sm" onclick="changeBorders()">Применить
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card bg-light">
+                        <div class="card-header text-center">Добавить заголовок</div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <form>
+                                    <input class="form-control form-control-sm mb-2" type="text" id="add">
+                                    <button type="button" class="btn btn-dark btn-sm" onclick="changeCaption()">Добавить
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card bg-light">
+                        <div class="card-header text-center">Удалить элемент</div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <form>
+                                    <div class="btn-group btn-group-toggle mb-2 btn-block " data-toggle="buttons">
+                                        <label class="btn btn-sm btn-outline-dark active">
+                                            <input type="radio" name="options" class="input-deleter" autocomplete="off" checked>
+                                            Строка
+                                        </label>
+                                        <label class="btn btn-sm btn-outline-dark">
+                                            <input type="radio" name="options" class="input-deleter" autocomplete="off">
+                                            Столбец
+                                        </label>
+                                    </div>
+                                    <input class="form-control form-control-sm mb-2" type="text" id="delete">
+                                    <button type="button" class="btn btn-dark btn-sm" onclick="deleteElement(this)">Удалить
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card bg-light">
+                        <div class="card-header text-center">Случайный выбор</div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <form>
+                                    <button type="button" class="btn btn-dark btn-sm"
+                                            onclick="magic()">Magic
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card bg-light">
+                        <div class="card-header text-center">Удалить</div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <form>
+                                    <button type="button" class="btn btn-dark btn-sm" id="clean" onclick="cleanTable()">Очистить
+                                        таблицу
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 order-sm-12 order-sm-1">
+                <div class="container-fluid mt-3 mt-md-5 d-none" id="alertWrapper">
+                    <div class="row justify-content-end">
+                        <div class="col-md-5 col-sm-5">
+                            <div class="alert alert-warning alert-dismissible fade" id="alert" role="alert">
+                                <strong>Holy guacamole!</strong> Данные не получены или некорректны. Попробуйте зайти на главную
+                                страницу и повторить еще раз.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</main>
+
+
+<footer class="mt-auto" >
+    <div class="container-fluid text-center d-flex align-items-center justify-content-center bg-dark h-100"
+         style="min-height: 70px">
+        <span style="color: rgba(255,255,255,.5)">
+           by <a href="contact.html" style="color: rgba(255,255,255,.75);">Guryev Nikita</a>, N3456
+             <br> <a href="https://itmo.com/" style="color: rgba(255,255,255,.75);">ITMO University</a>, 2020
+        </span>
+    </div>
+</footer>
+
+<script src="js/table.js" onload="console.log('success')"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
