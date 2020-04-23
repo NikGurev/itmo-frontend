@@ -184,11 +184,13 @@ function createTableCellContent(td, previousValue) {
         divForm = document.createElement('div');
 
     divForm.className = 'form-group';
-    button.innerHTML = '<span class="material-icons">' +
+    button.innerHTML = '<span class="material-icons" style="font-size: 15px;">' +
         'save' +
         '</span>';
     button.className = 'btn btn-success';
-    textarea.className = 'form-control-sm mr-2';
+    button.style.padding = '0';
+    button.style.minWidth = '25px';
+    textarea.className = 'form-control-sm mr-1';
     if (previousValue !== undefined) {
         textarea.value = previousValue;
     }
@@ -196,7 +198,6 @@ function createTableCellContent(td, previousValue) {
     // После нажатия на «сохранить», эта форма пропадает, а вместо нее появляется введенный пользователем текст.
     button.onclick = () => {
         let div = document.createElement('div');
-        div.style.height = '60px';
         div.innerText = textarea.value;
         div.onclick = () => {
             td.append(createTableCellContent(td, div.innerText));
@@ -205,10 +206,13 @@ function createTableCellContent(td, previousValue) {
         td.append(div);
         let buttonDelete = document.createElement('button');
         buttonDelete.type = 'button';
-        buttonDelete.innerHTML = '<span class="material-icons">' +
+        buttonDelete.innerHTML = '<span class="material-icons" style="font-size: 15px;">' +
             'delete' +
             '</span>';
         buttonDelete.className = 'btn btn-danger';
+        buttonDelete.style.padding = '0';
+        buttonDelete.style.minWidth = '25px';
+        buttonDelete.style.float = 'right';
         buttonDelete.onclick = () => td.append(createTableCellContent(td));
         td.append(buttonDelete);
     };
@@ -304,7 +308,7 @@ function changeCaption() {
 function deleteElement(button) {
     /*custom-control-input[0] - rows
     * custom-control-input[1] - columns*/
-    (button.parentNode.querySelectorAll('.custom-control-input')[0].checked)
+    (button.parentNode.querySelectorAll('.input-deleter')[0].checked)
         ? deleteRow() : deleteColumn();
 }
 

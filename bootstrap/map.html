@@ -12,11 +12,6 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <style>
-        #map {
-            height: 100%;
-        }
-    </style>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -55,8 +50,8 @@
     </nav>
 </header>
 
-<main role="main" class="flex-shrink-0" style="height: 100%;">
-    <div id="map"></div>
+<main role="main" style="height: 100%;">
+    <div id="map" style="height: 100%"></div>
     <script>
         var map;
         // Initialize and add the map
@@ -70,8 +65,9 @@
     </script>
 </main>
 
-<footer class="mt-auto" style="min-height: 70px">
-    <div class="container-fluid text-center d-flex align-items-center justify-content-center bg-dark h-100">
+<footer class="mt-auto">
+    <div class="container-fluid text-center d-flex align-items-center justify-content-center bg-dark h-100"
+         style="min-height: 70px">
         <span style="color: rgba(255,255,255,.5)">
            by <a href="contact.html" style="color: rgba(255,255,255,.5)">Guryev Nikita</a>, N3456
              <br> <a href="https://itmo.com/" style="color: rgba(255,255,255,.5)">ITMO University</a>, 2020

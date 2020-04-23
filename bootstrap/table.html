@@ -81,8 +81,8 @@
 
 <main>
     <div class="container-fluid p-0 d-flex flex-column">
-        <div class="row" id="wrapper">
-            <div class="col-12 order-12">
+        <div class="row" id="wrapper" style="margin: 0">
+            <div class="col-12 order-12" style="padding: 0">
                 <div class="card-group">
                     <div class="card bg-light">
                         <div class="card-header text-center">Изменить границы таблицы</div>
@@ -120,13 +120,15 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <form>
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadio1"> Строка</label>
-                                    </div>
-                                    <div class="custom-control custom-radio mb-2">
-                                        <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadio2"> Столбец</label>
+                                    <div class="btn-group btn-group-toggle mb-2 btn-block " data-toggle="buttons">
+                                        <label class="btn btn-sm btn-outline-dark active">
+                                            <input type="radio" name="options" class="input-deleter" autocomplete="off" checked>
+                                            Строка
+                                        </label>
+                                        <label class="btn btn-sm btn-outline-dark">
+                                            <input type="radio" name="options" class="input-deleter" autocomplete="off">
+                                            Столбец
+                                        </label>
                                     </div>
                                     <input class="form-control form-control-sm mb-2" type="text" id="delete">
                                     <button type="button" class="btn btn-dark btn-sm" onclick="deleteElement(this)">Удалить
@@ -183,8 +185,9 @@
 </main>
 
 
-<footer class="mt-auto" style="min-height: 70px">
-    <div class="container-fluid text-center d-flex align-items-center justify-content-center bg-dark h-100">
+<footer class="mt-auto" >
+    <div class="container-fluid text-center d-flex align-items-center justify-content-center bg-dark h-100"
+         style="min-height: 70px">
         <span style="color: rgba(255,255,255,.5)">
            by <a href="contact.html" style="color: rgba(255,255,255,.75);">Guryev Nikita</a>, N3456
              <br> <a href="https://itmo.com/" style="color: rgba(255,255,255,.75);">ITMO University</a>, 2020

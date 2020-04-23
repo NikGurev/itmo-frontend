@@ -57,23 +57,27 @@
 </header>
 
 <main role="main" class="flex-shrink-0">
-
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" id="breadcrumb-group">
+            <li class="breadcrumb-item"><a href="#">Веб-технологии</a></li>
+        </ol>
+    </nav>
     <div class="container-fluid mt-2 mb-2" style="position: relative;">
         <div class="row">
             <div class="col-5">
                 <div id="list-example" class="list-group shadow-sm">
                     <a class="list-group-item list-group-item-action active" href="#list-item-1" data-toggle="list"
-                       role="tab" aria-controls="list-item-1">Задание 1</a>
+                       role="tab" aria-controls="list-item-1" onclick="onFirstTaskClicked()">Задание 1</a>
                     <a class="list-group-item list-group-item-action" href="#list-item-2" data-toggle="list" role="tab"
-                       aria-controls="list-item-2">Задание 2</a>
+                       aria-controls="list-item-2" onclick="onSecondTaskClicked()">Задание 2</a>
                     <a class="list-group-item list-group-item-action" href="#list-item-3" data-toggle="list" role="tab"
-                       aria-controls="list-item-3">Задание 3</a>
+                       aria-controls="list-item-3" onclick="onThirdTaskClicked()">Задание 3</a>
                     <a class="list-group-item list-group-item-action" href="#list-item-4" data-toggle="list" role="tab"
-                       aria-controls="list-item-4">Задание 4</a>
+                       aria-controls="list-item-4" onclick="onFourthTaskClicked()">Задание 4</a>
                     <a class="list-group-item list-group-item-action" href="#list-item-5" data-toggle="list" role="tab"
-                       aria-controls="list-item-5">Задание 5</a>
+                       aria-controls="list-item-5" onclick="onFifthTaskClicked()">Задание 5</a>
                     <a class="list-group-item list-group-item-action" href="#list-item-6" data-toggle="list" role="tab"
-                       aria-controls="list-item-6">Задание 6</a>
+                       aria-controls="list-item-6" onclick="onSixthTaskClicked()">Задание 6</a>
                 </div>
             </div>
             <div class="col-7">
@@ -136,7 +140,7 @@
                                 <p class="card-text">
                                     Изучение Bootstrap: создание и оформление нескольких страниц. Доработка 2 задания по
                                     JavaScript.</p>
-                                <a href="https://github.com/kikichik/itmo/tree/master/jquery"
+                                <a href="https://github.com/kikichik/itmo/tree/task_bootstrap/bootstrap"
                                    class="btn btn-primary">Ссылка на задание</a>
                             </div>
                         </div>
@@ -147,8 +151,9 @@
     </div>
 </main>
 
-<footer class="mt-auto" style="min-height: 70px">
-    <div class="container-fluid text-center d-flex align-items-center justify-content-center bg-dark h-100">
+<footer class="mt-auto">
+    <div class="container-fluid text-center d-flex align-items-center justify-content-center bg-dark h-100"
+         style="min-height: 70px">
         <span style="color: rgba(255,255,255,.5)">
            by <a href="contact.html" style="color: rgba(255,255,255,.75);">Guryev Nikita</a>, N3456
              <br> <a href="https://itmo.com/" style="color: rgba(255,255,255,.75);">ITMO University</a>, 2020
@@ -157,9 +162,69 @@
 </footer>
 
 <script>
-    $('body').scrollspy({ target: '#list-example' });
-</script>
+    function onFirstTaskClicked() {
+        createBreadCrumb('HTML');
+    }
 
+    function onSecondTaskClicked() {
+        createBreadCrumb('CSS');
+    }
+
+
+    function onThirdTaskClicked() {
+        createComplicatedBreadCrumb('Задание 1');
+    }
+
+    function onFourthTaskClicked() {
+        createComplicatedBreadCrumb('Задание 2');
+    }
+
+    function onFifthTaskClicked() {
+        createBreadCrumb('JQuery');
+    }
+
+    function onSixthTaskClicked() {
+        createBreadCrumb('Bootstrap');
+    }
+
+    function createBreadCrumb(name) {
+        let li = document.createElement('li');
+        let ol = document.querySelector('#breadcrumb-group');
+        console.log(ol.children);
+        if (ol.children.length > 1) {
+            for (let i = 0; i < ol.children.length; i++) {
+                ol.removeChild(ol.lastChild);
+            }
+        }
+        console.log(ol.children);
+        li.className = 'breadcrumb-item active';
+        li.ariaCurrent = 'page';
+        li.innerText = name;
+        ol.append(li);
+    }
+
+    function createComplicatedBreadCrumb(name) {
+        let liJavaScript = document.createElement('li');
+        let aJavaScript = document.createElement('a');
+        let ol = document.querySelector('#breadcrumb-group');
+        if (ol.children.length > 1) {
+            for (let i = 0; i < ol.children.length; i++) {
+                ol.removeChild(ol.lastChild);
+            }
+        }
+        liJavaScript.className ='breadcrumb-item';
+        aJavaScript.href ='#';
+        aJavaScript.innerText = 'JavaScript';
+        liJavaScript.append(aJavaScript);
+        ol.append(liJavaScript);
+
+        let liTaskNumber = document.createElement('li');
+        liTaskNumber.className = 'breadcrumb-item active';
+        liTaskNumber.ariaCurrent = 'page';
+        liTaskNumber.innerText = name;
+        ol.append(liTaskNumber);
+    }
+</script>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>
