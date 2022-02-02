@@ -1,2 +1,2 @@
 # Tasks information index: 
-https://kikichik.github.io/tasks.html
+https://nikgurev.github.io/tasks.html
